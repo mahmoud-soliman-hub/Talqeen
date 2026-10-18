@@ -97,8 +97,8 @@ export const Programs: React.FC = () => {
                 style={{
                   ...font(460, 700, 'transparent'),
                   position: 'absolute',
-                  WebkitTextStroke: `2px ${C.goldSoft}`,
-                  opacity: 0.4 * ghost,
+                  WebkitTextStroke: `3px ${C.teal}`,
+                  opacity: ghost * (0.85 - 0.6 * k(t, p.nameAt - 0.4, p.nameAt + 0.6)),
                   lineHeight: 1,
                   direction: 'ltr',
                   transform: `scale(${1.08 - 0.08 * ghost})`,
