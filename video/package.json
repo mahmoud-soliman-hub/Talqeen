@@ -1,0 +1,17 @@
+{
+  "name": "talqeen-motion",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio",
+    "still": "remotion still",
+    "render": "remotion render Talqeen out/talqeen.mp4"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.536",
+    "@types/react": "^18.3.31",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.536",
+    "typescript": "^5.9.3"
+  }
+}
