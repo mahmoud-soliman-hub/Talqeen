@@ -7,7 +7,10 @@
     "render": "remotion render Talqeen out/talqeen.mp4"
   },
   "dependencies": {
+    "@remotion/bundler": "^4.0.536",
     "@remotion/cli": "^4.0.536",
+    "@remotion/media-utils": "^4.0.536",
+    "@remotion/renderer": "^4.0.536",
     "@types/react": "^18.3.31",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
