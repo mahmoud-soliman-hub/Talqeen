@@ -1,8 +1,8 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
-import { Divider } from '../components/Ornaments';
+import { Divider, archPath } from '../components/Ornaments';
 import { Label, Title, Wipe, Words, Seg } from '../components/Type';
-import { Diamond, Icon, Photo } from '../components/Visual';
+import { Diamond, Icon, Media } from '../components/Visual';
 import { C } from '../theme';
 import { font, k, useT, win } from '../lib';
 
@@ -56,49 +56,90 @@ const GOALS: { n: string; at: number; end: number; img: string; pos: string; seg
 
 export const Goals: React.FC = () => {
   const t = useT();
-  const intro = win(t, 89.9, 93.2, 0.5);
-  const active = GOALS.findIndex((g) => t >= g.at - 0.3 && t < g.end);
+  const intro = win(t, 89.9, 93.0, 0.5);
+  const active = GOALS.reduce((a, g, i) => (t >= g.at - 0.3 ? i : a), -1);
+  const shown = k(t, 92.6, 93.4);
+  const roll = GOALS.reduce((a, g, i) => a + (i ? k(t, g.at - 0.35, g.at + 0.45) : 0), 0);
+  const AW = 620;
+  const AH = 760;
+  const d = archPath(AW, AH);
+  const perim = AW * 2 + AH * 2.2;
   return (
     <AbsoluteFill>
-      <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', opacity: intro }}>
+      <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', opacity: intro, transform: `translateY(${-60 * k(t, 92.4, 93.0)}px)` }}>
         <Label at={90.2}>04</Label>
         <div style={{ height: 10 }} />
         <Title text="الأهداف الاستراتيجية" at={90.46} size={130} align="center" rule={false} />
         <div style={{ height: 30 }} />
         <Divider width={600} progress={k(t, 91.0, 92.2)} />
       </AbsoluteFill>
-      {GOALS.map((g, i) => {
-        const o = win(t, g.at - 0.3, g.end, 0.45);
-        if (o <= 0) return null;
-        const num = k(t, g.at - 0.2, g.at + 0.8);
-        return (
-          <AbsoluteFill key={g.n} style={{ opacity: o }}>
-            <Photo src={g.img} w={620} h={760} at={g.at - 0.2} span={10} shape="arch" pos={g.pos} style={{ position: 'absolute', left: 170, top: 170 }} />
-            <div style={{ position: 'absolute', right: 170, top: 190, width: 860, textAlign: 'right' }}>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: 24, direction: 'rtl' }}>
-                <span
-                  style={{
-                    ...font(190, 700, 'transparent'),
-                    WebkitTextStroke: `2px ${C.teal}`,
-                    direction: 'ltr',
-                    lineHeight: 1,
-                    opacity: num,
-                    transform: `translateY(${(1 - num) * 40}px)`,
-                    display: 'inline-block',
-                  }}
+      {/* one arch for all four goals; each new image wipes in right-to-left */}
+      <div style={{ position: 'absolute', left: 170, top: 170, width: AW, height: AH, opacity: shown }}>
+        <div style={{ position: 'absolute', inset: 0, clipPath: `path('${d}')` }}>
+          {GOALS.map((g, i) => {
+            const p = i === 0 ? 1 : k(t, g.at - 0.45, g.at + 0.55);
+            if (p <= 0) return null;
+            const z = 1.12 - 0.1 * k(t, g.at - 0.4, g.end + 0.5, (x) => x);
+            return (
+              <div key={g.n} style={{ position: 'absolute', inset: 0, clipPath: `inset(0 0 0 ${(1 - p) * 100}%)` }}>
+                <Media src={g.img} pos={g.pos} scale={z} />
+              </div>
+            );
+          })}
+        </div>
+        <svg width={AW} height={AH} style={{ position: 'absolute', inset: 0, overflow: 'visible' }}>
+          <path
+            d={d}
+            fill="none"
+            stroke={C.gold}
+            strokeWidth={2}
+            strokeDasharray={perim}
+            strokeDashoffset={perim * (1 - k(t, 92.6, 94.4))}
+            transform={`translate(-14 -14) scale(${(AW + 28) / AW} ${(AH + 14) / AH})`}
+          />
+        </svg>
+      </div>
+      <div style={{ position: 'absolute', right: 170, top: 190, width: 860, textAlign: 'right', opacity: shown }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 24, direction: 'rtl' }}>
+          <div style={{ height: 200, overflow: 'hidden' }}>
+            <div style={{ transform: `translateY(${-roll * 200}px)` }}>
+              {GOALS.map((g) => (
+                <div
+                  key={g.n}
+                  style={{ ...font(190, 700, 'transparent'), WebkitTextStroke: `2px ${C.teal}`, direction: 'ltr', lineHeight: '200px', height: 200 }}
                 >
                   {g.n}
-                </span>
-                <Wipe at={g.at} dur={0.8}>
-                  <p style={{ ...font(32, 300, C.gold), letterSpacing: 4 }}>الهدف</p>
-                </Wipe>
-              </div>
-              <div style={{ height: 24 }} />
-              <Words segs={g.segs} size={62} weight={700} hot={g.hot} lineHeight={1.45} />
+                </div>
+              ))}
             </div>
-          </AbsoluteFill>
-        );
-      })}
+          </div>
+          <Wipe at={93.0} dur={0.8}>
+            <p style={{ ...font(32, 300, C.gold), letterSpacing: 4 }}>الهدف</p>
+          </Wipe>
+        </div>
+        <div style={{ position: 'relative', height: 420, marginTop: 10 }}>
+          {GOALS.map((g, i) => {
+            const nx = GOALS[i + 1];
+            const e = nx ? k(t, nx.at - 0.55, nx.at - 0.05) : 0;
+            if (t < g.at - 0.5 || e >= 1) return null;
+            return (
+              <div
+                key={g.n}
+                style={{
+                  position: 'absolute',
+                  right: 0,
+                  width: 860,
+                  opacity: 1 - e,
+                  transform: `translateY(${-50 * e}px)`,
+                  clipPath: `inset(-10% 0 ${e * 100}% 0)`,
+                }}
+              >
+                <Words segs={g.segs} size={62} weight={700} hot={g.hot} lineHeight={1.45} />
+              </div>
+            );
+          })}
+        </div>
+      </div>
       {/* progress diamonds */}
       <div
         style={{
@@ -109,7 +150,7 @@ export const Goals: React.FC = () => {
           gap: 26,
           direction: 'rtl',
           alignItems: 'center',
-          opacity: k(t, 92.8, 93.6) * (1 - k(t, 130.3, 130.9)),
+          opacity: shown,
         }}
       >
         {GOALS.map((g, i) => (

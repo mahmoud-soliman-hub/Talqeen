@@ -1,5 +1,5 @@
 import React from 'react';
-import { Img, staticFile } from 'remotion';
+import { Img, OffthreadVideo, staticFile } from 'remotion';
 import { C } from '../theme';
 import { k, useT } from '../lib';
 import { archPath } from './Ornaments';
@@ -40,10 +40,7 @@ export const Photo: React.FC<{
           boxShadow: shape === 'rect' ? '0 30px 60px -30px rgba(40,60,60,0.35)' : undefined,
         }}
       >
-        <Img
-          src={staticFile(src)}
-          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: pos, transform: `scale(${z})` }}
-        />
+        <Media src={src} pos={pos} scale={z} />
       </div>
       {shape === 'arch' && frame && (
         <svg width={w} height={h} style={{ position: 'absolute', inset: 0, overflow: 'visible' }}>
@@ -131,3 +128,20 @@ export const Diamond: React.FC<{ size: number; fill?: string; stroke?: string; s
     }}
   />
 );
+
+// Image or muted stock clip (slowed for a calmer, cinematic feel), cover-fitted.
+export const Media: React.FC<{ src: string; pos?: string; scale?: number; rate?: number; from?: number; style?: React.CSSProperties }> = ({
+  src,
+  pos = '50% 50%',
+  scale = 1,
+  rate = 0.75,
+  from = 0,
+  style,
+}) => {
+  const css: React.CSSProperties = { width: '100%', height: '100%', objectFit: 'cover', objectPosition: pos, transform: `scale(${scale})`, ...style };
+  return src.endsWith('.mp4') ? (
+    <OffthreadVideo src={staticFile(src)} muted playbackRate={rate} startFrom={Math.round(from * 30)} style={css} />
+  ) : (
+    <Img src={staticFile(src)} style={css} />
+  );
+};

@@ -43,17 +43,20 @@ export const Divider: React.FC<{ width: number; progress: number; color?: string
 };
 
 // Pointed dome arch, echoing the logo's mihrab silhouette.
-export const archPath = (w: number, h: number) => {
+export const archPath = (w: number, h: number) => archPathAt(0, 0, w, h);
+
+export const archPathAt = (ox: number, oy: number, w: number, h: number) => {
   const r = w / 2;
   const shoulder = h * 0.34;
+  const P = (x: number, y: number) => `${(x + ox).toFixed(1)} ${(y + oy).toFixed(1)}`;
   return [
-    `M 0 ${h}`,
-    `L 0 ${shoulder}`,
-    `C 0 ${shoulder * 0.45}, ${r * 0.55} ${shoulder * 0.18}, ${r * 0.86} ${shoulder * 0.1}`,
-    `C ${r * 0.95} ${shoulder * 0.07}, ${r} 0, ${r} 0`,
-    `C ${r} 0, ${r * 1.05} ${shoulder * 0.07}, ${r * 1.14} ${shoulder * 0.1}`,
-    `C ${w - r * 0.55} ${shoulder * 0.18}, ${w} ${shoulder * 0.45}, ${w} ${shoulder}`,
-    `L ${w} ${h}`,
+    `M ${P(0, h)}`,
+    `L ${P(0, shoulder)}`,
+    `C ${P(0, shoulder * 0.45)}, ${P(r * 0.55, shoulder * 0.18)}, ${P(r * 0.86, shoulder * 0.1)}`,
+    `C ${P(r * 0.95, shoulder * 0.07)}, ${P(r, 0)}, ${P(r, 0)}`,
+    `C ${P(r, 0)}, ${P(r * 1.05, shoulder * 0.07)}, ${P(r * 1.14, shoulder * 0.1)}`,
+    `C ${P(w - r * 0.55, shoulder * 0.18)}, ${P(w, shoulder * 0.45)}, ${P(w, shoulder)}`,
+    `L ${P(w, h)}`,
     'Z',
   ].join(' ');
 };

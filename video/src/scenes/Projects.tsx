@@ -82,11 +82,14 @@ export const Programs: React.FC = () => {
         </div>
       </AbsoluteFill>
       {PROGRAMS.map((p) => {
-        const o = win(t, p.at - 0.25, p.end, 0.4);
-        if (o <= 0) return null;
+        if (t < p.at - 0.3 || t > p.end) return null;
+        const e = k(t, p.end - 0.5, p.end - 0.05);
         const ghost = k(t, p.at - 0.2, p.at + 0.9);
         return (
-          <AbsoluteFill key={p.n} style={{ opacity: o, alignItems: 'center' }}>
+          <AbsoluteFill
+            key={p.n}
+            style={{ alignItems: 'center', opacity: 1 - e, transform: `translateY(${-70 * e}px) scale(${1 - 0.04 * e})`, clipPath: `inset(-5% 0 ${e * 60}% 0)` }}
+          >
             <div style={{ marginTop: 120 }}>
               <Wipe at={p.at + 0.2} dur={0.8}>
                 <p style={{ ...font(54, 300, C.tealDeep), textAlign: 'center' }}>{p.title}</p>
