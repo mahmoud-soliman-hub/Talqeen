@@ -79,7 +79,7 @@ export const Governance: React.FC = () => {
 // 0:51 — vision.
 export const Vision: React.FC = () => (
   <AbsoluteFill>
-    <Photo src={MEDIA["s03-vision"]} w={560} h={800} at={50.5} span={12.5} shape="arch" pos="30% 50%" style={{ position: 'absolute', left: 190, top: 150 }} />
+    <Photo src={MEDIA["s03-vision"]} w={560} h={800} at={50.5} span={12.5} shape="arch" pos="62% 50%" style={{ position: 'absolute', left: 190, top: 150 }} />
     <div style={{ position: 'absolute', right: 170, top: 210, width: 920 }}>
       <Title text="الرؤية" at={51.55} size={160} />
       <div style={{ height: 40 }} />

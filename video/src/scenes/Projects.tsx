@@ -138,7 +138,7 @@ export const Sustainability: React.FC = () => {
   const active = SUSTAIN.reduce((a, s, i) => (t >= s.at - 0.2 ? i : a), -1);
   return (
     <AbsoluteFill>
-      <Photo src={MEDIA["s11-waqf"]} w={560} h={800} at={187.85} span={22} shape="arch" pos="30% 50%" style={{ position: 'absolute', left: 170, top: 140 }} />
+      <Photo src={MEDIA["s11-waqf"]} w={560} h={800} at={187.85} span={22} shape="arch" pos="50% 55%" style={{ position: 'absolute', left: 170, top: 140 }} />
       <div style={{ position: 'absolute', right: 160, top: 120, width: 1000 }}>
         <Title text="مشاريع الاستدامة" at={188.75} size={110} />
       </div>

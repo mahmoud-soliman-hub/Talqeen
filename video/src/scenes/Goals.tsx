@@ -7,13 +7,13 @@ import { C } from '../theme';
 import { MEDIA } from '../media';
 import { font, k, useT, win } from '../lib';
 
-const GOALS: { n: string; at: number; end: number; img: string; pos: string; segs: Seg[]; hot: string[] }[] = [
+const GOALS: { n: string; at: number; end: number; img: string; pos: string; tint?: string; segs: Seg[]; hot: string[] }[] = [
   {
     n: '01',
     at: 93.03,
     end: 102.6,
     img: MEDIA['g01-tilawa'],
-    pos: '8% 60%',
+    pos: '50% 60%',
     segs: [
       { s: 94.17, e: 99.26, text: 'تمكين الطلاب من تلاوة القرآن الكريم وتجويده بتطبيق عملي دقيق' },
       { s: 99.56, e: 101.86, text: 'وفق قواعد الرواية والدراية' },
@@ -25,7 +25,7 @@ const GOALS: { n: string; at: number; end: number; img: string; pos: string; seg
     at: 102.83,
     end: 111.6,
     img: MEDIA['g02-huffaz'],
-    pos: '50% 55%',
+    pos: '58% 62%',
     segs: [{ s: 103.96, e: 110.8, text: 'إعداد جيل متميز من الحفّاظ المتقنين المؤهلين للالتحاق ببرامج الإجازات والأسانيد' }],
     hot: ['الحفّاظ', 'المتقنين', 'الإجازات', 'والأسانيد'],
   },
@@ -34,7 +34,7 @@ const GOALS: { n: string; at: number; end: number; img: string; pos: string; seg
     at: 111.87,
     end: 120.7,
     img: MEDIA['g03-supervision'],
-    pos: '55% 50%',
+    pos: '30% 50%',
     segs: [
       { s: 112.81, e: 116.17, text: 'تطبيق معايير إشرافية وتقييمية دقيقة' },
       { s: 116.54, e: 119.91, text: 'لمتابعة تطور المستويات والأداء التشغيلي' },
@@ -46,7 +46,8 @@ const GOALS: { n: string; at: number; end: number; img: string; pos: string; seg
     at: 120.94,
     end: 131.0,
     img: MEDIA['g04-environment'],
-    pos: '45% 50%',
+    pos: '50% 50%',
+    tint: 'sepia(0.45) saturate(1.3) brightness(1.06) contrast(0.95)',
     segs: [
       { s: 121.94, e: 127.38, text: 'توفير بيئة تعليمية جاذبة ومكتملة التجهيزات التقنية والتعليمية' },
       { s: 127.74, e: 129.19, text: 'والسعي لاستدامتها' },
@@ -81,7 +82,7 @@ export const Goals: React.FC = () => {
             const z = 1.12 - 0.1 * k(t, g.at - 0.4, g.end + 0.5, (x) => x);
             return (
               <div key={g.n} style={{ position: 'absolute', inset: 0, clipPath: `inset(0 0 0 ${(1 - p) * 100}%)` }}>
-                <Media src={g.img} pos={g.pos} scale={z} />
+                <Media src={g.img} pos={g.pos} scale={z} style={g.tint ? { filter: g.tint } : undefined} />
               </div>
             );
           })}

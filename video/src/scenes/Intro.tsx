@@ -85,7 +85,7 @@ export const Founding: React.FC = () => {
   ];
   return (
     <AbsoluteFill>
-      <Photo src={MEDIA["s01-founding"]} w={600} h={820} at={7.85} span={17} shape="arch" pos="78% 78%" style={{ position: 'absolute', left: 170, top: 150 }} />
+      <Photo src={MEDIA["s01-founding"]} w={600} h={820} at={7.85} span={17} shape="arch" pos="50% 60%" style={{ position: 'absolute', left: 170, top: 150 }} />
       <div style={{ position: 'absolute', right: 170, top: 200, width: 920, textAlign: 'right' }}>
         <Label at={8.4}>عن الجمعية</Label>
         <div style={{ position: 'relative', marginTop: 20 }}>
