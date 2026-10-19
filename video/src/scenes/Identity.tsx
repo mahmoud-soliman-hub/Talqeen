@@ -4,6 +4,7 @@ import { archPath } from '../components/Ornaments';
 import { Label, Title, Wipe, Words } from '../components/Type';
 import { Diamond, Icon, Photo } from '../components/Visual';
 import { C } from '../theme';
+import { MEDIA } from '../media';
 import { font, k, kashida, useT } from '../lib';
 
 // 0:40 — governance, measurement and quality.
@@ -22,7 +23,7 @@ export const Governance: React.FC = () => {
           const R = 118;
           const L = 2 * Math.PI * R;
           return (
-            <div key={label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: k(t, at - 0.2, at + 0.4), transform: `translateY(${i % 2 ? 40 : 0}px)` }}>
+            <div key={label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: k(t, 40.0 + i * 0.18, 40.6 + i * 0.18), transform: `translateY(${(i % 2 ? 40 : 0) + 30 * (1 - k(t, 40.0 + i * 0.18, 40.8 + i * 0.18))}px)` }}>
               <div style={{ position: 'relative', width: 280, height: 280 }}>
                 <svg width={280} height={280} style={{ position: 'absolute', inset: 0, transform: 'rotate(-90deg)' }}>
                   <circle cx={140} cy={140} r={R} fill="#FFFFFF" stroke={C.goldSoft} strokeWidth={2} opacity={0.9} />
@@ -45,7 +46,7 @@ export const Governance: React.FC = () => {
                   </defs>
                 </svg>
                 <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Icon name={icon} at={at + 0.2} size={92} />
+                  <Icon name={icon} at={at + 0.2} size={92} color={i % 2 ? C.greenDeep : C.tealDeep} />
                 </div>
               </div>
               <p style={{ ...font(38, 700, C.ink), marginTop: 22 }}>{label}</p>
@@ -78,9 +79,9 @@ export const Governance: React.FC = () => {
 // 0:51 — vision.
 export const Vision: React.FC = () => (
   <AbsoluteFill>
-    <Photo src="img/03-mashrabiya-window.jpg" w={560} h={800} at={51.0} span={12.5} shape="arch" pos="30% 50%" style={{ position: 'absolute', left: 190, top: 150 }} />
+    <Photo src={MEDIA["s03-vision"]} w={560} h={800} at={50.5} span={12.5} shape="arch" pos="30% 50%" style={{ position: 'absolute', left: 190, top: 150 }} />
     <div style={{ position: 'absolute', right: 170, top: 210, width: 920 }}>
-      <Title text="الرؤية" at={51.55} size={160} label="01" />
+      <Title text="الرؤية" at={51.55} size={160} />
       <div style={{ height: 40 }} />
       <Words
         segs={[
@@ -102,20 +103,20 @@ export const Mission: React.FC = () => {
   const t = useT();
   const cards = [
     { at: 68.66, icon: 'book', title: 'مناهج إقرائية', sub: 'معتمدة' },
-    { at: 71.0, img: 'img/04-teacher-hands.jpg', title: 'كفاءات تعليمية', sub: 'مؤهلة' },
+    { at: 71.0, icon: 'teacher', title: 'كفاءات تعليمية', sub: 'مؤهلة' },
     { at: 73.87, icon: 'shield', title: 'ضبط التلاوة', sub: 'وترسيخ أحكام الإتقان' },
     { at: 77.28, icon: 'tablet', title: 'تقنيات حديثة', sub: 'وأساليب تربوية جاذبة' },
   ];
   return (
     <AbsoluteFill>
       <div style={{ position: 'absolute', right: 160, top: 110, width: 1600, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', direction: 'rtl' }}>
-        <Title text="الرسالة" at={63.7} size={140} label="02" />
+        <Title text="الرسالة" at={63.05} size={140} />
         <div style={{ width: 860, textAlign: 'left', paddingBottom: 26 }}>
           <Words segs={[{ s: 65.07, e: 68.36, text: 'تقديم بيئة تعليمية قرآنية نموذجية' }]} size={56} weight={700} hot={['نموذجية']} />
         </div>
       </div>
       <div style={{ position: 'absolute', left: 160, right: 160, top: 470, display: 'flex', gap: 36, direction: 'rtl' }}>
-        {cards.map((c) => {
+        {cards.map((c, i) => {
           const p = k(t, c.at, c.at + 0.9);
           return (
             <div
@@ -134,11 +135,9 @@ export const Mission: React.FC = () => {
               }}
             >
               <div style={{ height: 250, position: 'relative', background: 'linear-gradient(160deg, #F6F4EE, #EEF6F5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                {c.img ? (
-                  <Photo src={c.img} w={392} h={250} at={c.at} span={10} radius={0} pos="60% 40%" />
-                ) : (
-                  <Icon name={c.icon!} at={c.at + 0.2} size={120} stroke={1.1} />
-                )}
+                <div style={{ width: 170, height: 170, borderRadius: '50%', background: i % 2 ? 'rgba(168,212,155,0.18)' : 'rgba(43,181,201,0.10)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Icon name={c.icon} at={c.at + 0.2} size={104} stroke={1.15} color={i % 2 ? C.greenDeep : C.tealDeep} />
+                </div>
               </div>
               <div style={{ padding: '30px 34px', textAlign: 'right' }}>
                 <p style={font(44, 700, C.ink)}>{c.title}</p>
@@ -167,10 +166,10 @@ export const Values: React.FC = () => {
   return (
     <AbsoluteFill style={{ alignItems: 'center' }}>
       <div style={{ marginTop: 90 }}>
-        <Title text="القيم" at={82.97} size={130} align="center" label="03" />
+        <Title text="القيم" at={82.97} size={130} align="center" />
       </div>
       <div style={{ display: 'flex', gap: 90, marginTop: 50, direction: 'rtl' }}>
-        {vals.map(({ at, w, icon }) => {
+        {vals.map(({ at, w, icon }, i) => {
           const p = k(t, at, at + 1.2);
           return (
             <div key={w} style={{ position: 'relative', width: W, height: H, transform: `translateY(${(1 - p) * 40}px)` }}>
@@ -185,12 +184,12 @@ export const Values: React.FC = () => {
                 <path d={d} fill="none" stroke={C.gold} strokeWidth={2} strokeDasharray={perim} strokeDashoffset={perim * (1 - p)} />
               </svg>
               <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingTop: 70 }}>
-                <Icon name={icon} at={at + 0.3} size={96} />
+                <Icon name={icon} at={at + 0.3} size={96} color={i % 2 ? C.greenDeep : C.tealDeep} />
                 <div style={{ height: 36 }} />
                 <Wipe at={at + 0.25} dur={0.9}>
                   <p style={font(66, 700, C.ink)}>{kashida(w, 2)}</p>
                 </Wipe>
-                <Diamond size={14} fill={C.gold} style={{ marginTop: 26, opacity: p }} />
+                <Diamond size={14} fill={C.green} style={{ marginTop: 26, opacity: p }} />
               </div>
             </div>
           );

@@ -43,7 +43,7 @@ export const Title: React.FC<{
     <div style={{ textAlign: align, display: 'flex', flexDirection: 'column', alignItems: align === 'center' ? 'center' : 'flex-end' }}>
       {label && (
         <Wipe at={at - 0.15} dur={0.7}>
-          <p style={{ ...font(30, 300, C.gold), letterSpacing: 4 }}>{label}</p>
+          <p style={{ ...font(36, 700, C.goldDeep) }}>{label}</p>
         </Wipe>
       )}
       <Wipe at={at} dur={1}>
@@ -104,6 +104,6 @@ export const Words: React.FC<{
 // Small gold caps-style label used above headings.
 export const Label: React.FC<{ at: number; children: React.ReactNode }> = ({ at, children }) => (
   <Wipe at={at} dur={0.7}>
-    <p style={{ ...font(30, 300, C.gold), letterSpacing: 4 }}>{children}</p>
+    <p style={{ ...font(36, 700, C.goldDeep) }}>{children}</p>
   </Wipe>
 );

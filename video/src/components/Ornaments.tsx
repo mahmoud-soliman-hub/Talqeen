@@ -16,8 +16,8 @@ export const Divider: React.FC<{ width: number; progress: number; color?: string
       <g stroke={color} strokeWidth={1.4} fill="none">
         <line x1={half - 62} y1={14} x2={half - 62 - lineLen * p} y2={14} />
         <line x1={half + 62} y1={14} x2={half + 62 + lineLen * p} y2={14} />
-        <circle cx={half - 62 - lineLen * p} cy={14} r={2.2} fill={color} opacity={p} />
-        <circle cx={half + 62 + lineLen * p} cy={14} r={2.2} fill={color} opacity={p} />
+        <circle cx={half - 62 - lineLen * p} cy={14} r={3} fill={C.green} opacity={p} />
+        <circle cx={half + 62 + lineLen * p} cy={14} r={3} fill={C.green} opacity={p} />
       </g>
       <g opacity={motif} transform={`translate(${half} 14) scale(${0.6 + 0.4 * motif})`}>
         {[-40, -20, 0, 20, 40].map((x, i) => {
@@ -31,8 +31,8 @@ export const Divider: React.FC<{ width: number; progress: number; color?: string
               height={s * 2}
               transform={`rotate(45 ${x} 0)`}
               rx={1.5}
-              fill={i === 2 ? color : 'none'}
-              stroke={color}
+              fill={i === 2 ? C.green : 'none'}
+              stroke={i === 2 ? C.greenDeep : color}
               strokeWidth={1.3}
             />
           );

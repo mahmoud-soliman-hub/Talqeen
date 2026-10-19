@@ -2,8 +2,9 @@ import React from 'react';
 import { AbsoluteFill, Img, staticFile } from 'remotion';
 import { Divider } from '../components/Ornaments';
 import { Label, Title, Wipe } from '../components/Type';
-import { Diamond, Icon, Photo } from '../components/Visual';
+import { Diamond, Icon, Media, Photo } from '../components/Visual';
 import { C } from '../theme';
+import { MEDIA } from '../media';
 import { font, k, kashida, useT, win } from '../lib';
 
 const PROGRAMS = [
@@ -22,7 +23,7 @@ const Journey: React.FC<{ active: number; reveal: number; big?: boolean }> = ({ 
       <svg width={1400} height={big ? 360 : 140} style={{ position: 'absolute', inset: 0, overflow: 'visible' }}>
         <line x1={1400} y1={big ? 300 : 40} x2={1400 - 1400 * reveal} y2={big ? 300 - 240 * reveal : 40} stroke={C.goldSoft} strokeWidth={2} />
         {active >= 0 && !big && (
-          <line x1={1400} y1={40} x2={1400 - 350 * active} y2={40} stroke={C.teal} strokeWidth={4} />
+          <line x1={1400} y1={40} x2={1400 - 350 * active} y2={40} stroke={C.green} strokeWidth={4} />
         )}
       </svg>
       <div style={{ position: 'absolute', inset: 0 }}>
@@ -50,8 +51,8 @@ const Journey: React.FC<{ active: number; reveal: number; big?: boolean }> = ({ 
             >
               <Diamond
                 size={s}
-                fill={big || on ? C.teal : C.bg}
-                stroke={big || on ? C.teal : C.goldSoft}
+                fill={cur || (big && i % 2 === 0) ? C.teal : on || big ? C.green : C.bg}
+                stroke={cur || (big && i % 2 === 0) ? C.teal : on || big ? C.green : C.goldSoft}
                 style={{ boxShadow: cur ? '0 0 0 12px rgba(43,181,201,0.13)' : undefined }}
               />
               <p style={{ ...font(big ? 50 : 32, big || cur ? 700 : 300, big || on ? C.ink : C.inkSoft), marginTop: big ? 26 : 20, whiteSpace: 'nowrap' }}>
@@ -75,7 +76,7 @@ export const Programs: React.FC = () => {
     <AbsoluteFill>
       <AbsoluteFill style={{ opacity: overview, alignItems: 'center' }}>
         <div style={{ marginTop: 120 }}>
-          <Title text="المشاريع التعليمية" at={162.7} size={110} align="center" label="06" />
+          <Title text="المشاريع التعليمية" at={162.7} size={110} align="center" />
         </div>
         <div style={{ position: 'absolute', left: 260, top: 470, width: 1400 }}>
           <Journey active={-1} reveal={k(t, 162.8, 164.6)} big />
@@ -137,9 +138,9 @@ export const Sustainability: React.FC = () => {
   const active = SUSTAIN.reduce((a, s, i) => (t >= s.at - 0.2 ? i : a), -1);
   return (
     <AbsoluteFill>
-      <Photo src="img/09-waqf-architecture.jpg" w={560} h={800} at={188.2} span={22} shape="arch" pos="30% 50%" style={{ position: 'absolute', left: 170, top: 140 }} />
+      <Photo src={MEDIA["s11-waqf"]} w={560} h={800} at={187.85} span={22} shape="arch" pos="30% 50%" style={{ position: 'absolute', left: 170, top: 140 }} />
       <div style={{ position: 'absolute', right: 160, top: 120, width: 1000 }}>
-        <Title text="مشاريع الاستدامة" at={188.75} size={110} label="07" />
+        <Title text="مشاريع الاستدامة" at={188.75} size={110} />
       </div>
       {/* active project, large */}
       <div style={{ position: 'absolute', right: 160, top: 400, width: 1000, height: 200 }}>
@@ -149,7 +150,7 @@ export const Sustainability: React.FC = () => {
           return (
             <div key={s.name} style={{ position: 'absolute', right: 0, top: 0, opacity: o, textAlign: 'right' }}>
               <Wipe at={s.at} dur={0.6}>
-                <p style={{ ...font(36, 300, C.gold), letterSpacing: 3 }}>مشروع</p>
+                <p style={{ ...font(36, 700, C.goldDeep) }}>مشروع</p>
               </Wipe>
               <Wipe at={s.nameAt - 0.2} dur={0.9}>
                 <p style={{ ...font(96, 700, C.ink), lineHeight: 1.3 }}>{s.name}</p>
@@ -172,7 +173,7 @@ export const Sustainability: React.FC = () => {
                 height: 250,
                 borderRadius: 26,
                 background: on ? `linear-gradient(160deg, ${C.teal}, ${C.tealDeep})` : '#FFFFFF',
-                border: `2px solid ${done ? C.teal : 'rgba(184,154,94,0.35)'}`,
+                border: `2px solid ${on ? C.teal : done ? C.green : 'rgba(184,154,94,0.35)'}`,
                 boxShadow: on ? '0 30px 50px -28px rgba(30,120,140,0.6)' : '0 18px 36px -30px rgba(30,70,80,0.4)',
                 opacity: p,
                 transform: `translateY(${(1 - p) * 40 - (on ? 14 : 0)}px)`,
@@ -183,7 +184,7 @@ export const Sustainability: React.FC = () => {
                 padding: '0 14px',
               }}
             >
-              <Icon name={s.icon} at={189.6 + i * 0.25} size={70} color={on ? '#FFFFFF' : C.tealDeep} />
+              <Icon name={s.icon} at={189.6 + i * 0.25} size={70} color={on ? '#FFFFFF' : i % 2 ? C.greenDeep : C.tealDeep} />
               <p style={{ ...font(30, 700, on ? '#FFFFFF' : C.ink), marginTop: 18, textAlign: 'center', lineHeight: 1.3 }}>{s.name}</p>
             </div>
           );
@@ -205,10 +206,7 @@ export const Outro: React.FC = () => {
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ opacity: bg * 0.55 }}>
-        <Img
-          src={staticFile('img/10-mosque-wide.jpg')}
-          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 70%', transform: `scale(${1.1 - 0.06 * k(t, 209.5, 216, (x) => x)})` }}
-        />
+        <Media src={MEDIA['s12-outro']} pos="50% 70%" style={{ transform: `scale(${1.1 - 0.06 * k(t, 209.5, 216, (x) => x)})` }} />
         <AbsoluteFill style={{ background: `linear-gradient(0deg, ${C.bg} 8%, rgba(250,248,243,0.35) 60%, rgba(250,248,243,0.6) 100%)` }} />
       </AbsoluteFill>
       <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>

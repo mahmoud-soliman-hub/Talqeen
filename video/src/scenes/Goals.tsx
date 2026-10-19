@@ -4,6 +4,7 @@ import { Divider, archPath } from '../components/Ornaments';
 import { Label, Title, Wipe, Words, Seg } from '../components/Type';
 import { Diamond, Icon, Media } from '../components/Visual';
 import { C } from '../theme';
+import { MEDIA } from '../media';
 import { font, k, useT, win } from '../lib';
 
 const GOALS: { n: string; at: number; end: number; img: string; pos: string; segs: Seg[]; hot: string[] }[] = [
@@ -11,7 +12,7 @@ const GOALS: { n: string; at: number; end: number; img: string; pos: string; seg
     n: '01',
     at: 93.03,
     end: 102.6,
-    img: 'img/06-manuscripts.jpg',
+    img: MEDIA['g01-tilawa'],
     pos: '8% 60%',
     segs: [
       { s: 94.17, e: 99.26, text: 'تمكين الطلاب من تلاوة القرآن الكريم وتجويده بتطبيق عملي دقيق' },
@@ -23,7 +24,7 @@ const GOALS: { n: string; at: number; end: number; img: string; pos: string; seg
     n: '02',
     at: 102.83,
     end: 111.6,
-    img: 'img/07-graduation-ijazah.jpg',
+    img: MEDIA['g02-huffaz'],
     pos: '50% 55%',
     segs: [{ s: 103.96, e: 110.8, text: 'إعداد جيل متميز من الحفّاظ المتقنين المؤهلين للالتحاق ببرامج الإجازات والأسانيد' }],
     hot: ['الحفّاظ', 'المتقنين', 'الإجازات', 'والأسانيد'],
@@ -32,7 +33,7 @@ const GOALS: { n: string; at: number; end: number; img: string; pos: string; seg
     n: '03',
     at: 111.87,
     end: 120.7,
-    img: 'img/08-quality-dashboard.jpg',
+    img: MEDIA['g03-supervision'],
     pos: '55% 50%',
     segs: [
       { s: 112.81, e: 116.17, text: 'تطبيق معايير إشرافية وتقييمية دقيقة' },
@@ -44,7 +45,7 @@ const GOALS: { n: string; at: number; end: number; img: string; pos: string; seg
     n: '04',
     at: 120.94,
     end: 131.0,
-    img: 'img/05-tablet-modern.jpg',
+    img: MEDIA['g04-environment'],
     pos: '45% 50%',
     segs: [
       { s: 121.94, e: 127.38, text: 'توفير بيئة تعليمية جاذبة ومكتملة التجهيزات التقنية والتعليمية' },
@@ -67,8 +68,6 @@ export const Goals: React.FC = () => {
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', opacity: intro, transform: `translateY(${-60 * k(t, 92.4, 93.0)}px)` }}>
-        <Label at={90.2}>04</Label>
-        <div style={{ height: 10 }} />
         <Title text="الأهداف الاستراتيجية" at={90.46} size={130} align="center" rule={false} />
         <div style={{ height: 30 }} />
         <Divider width={600} progress={k(t, 91.0, 92.2)} />
@@ -114,7 +113,7 @@ export const Goals: React.FC = () => {
             </div>
           </div>
           <Wipe at={93.0} dur={0.8}>
-            <p style={{ ...font(32, 300, C.gold), letterSpacing: 4 }}>الهدف</p>
+            <p style={{ ...font(36, 700, C.goldDeep) }}>الهدف</p>
           </Wipe>
         </div>
         <div style={{ position: 'relative', height: 420, marginTop: 10 }}>
@@ -157,8 +156,8 @@ export const Goals: React.FC = () => {
           <Diamond
             key={g.n}
             size={i === active ? 26 : 18}
-            fill={i <= active ? C.teal : C.bg}
-            stroke={i <= active ? C.teal : C.goldSoft}
+            fill={i === active ? C.teal : i < active ? C.green : C.bg}
+            stroke={i === active ? C.teal : i < active ? C.green : C.goldSoft}
           />
         ))}
       </div>
@@ -179,7 +178,7 @@ export const Outputs: React.FC = () => {
   return (
     <AbsoluteFill>
       <div style={{ position: 'absolute', right: 160, top: 110 }}>
-        <Title text="المخرجات المتوقعة" at={131.39} size={110} label="05" />
+        <Title text="المخرجات المتوقعة" at={130.65} size={110} />
       </div>
       <div
         style={{
@@ -217,10 +216,10 @@ export const Outputs: React.FC = () => {
               <div style={{ position: 'relative', width: 130, height: 130, flexShrink: 0 }}>
                 <svg width={130} height={130} style={{ position: 'absolute', inset: 0, transform: 'rotate(-90deg)' }}>
                   <circle cx={65} cy={65} r={60} fill="rgba(43,181,201,0.06)" stroke={C.goldSoft} strokeWidth={1.5} />
-                  <circle cx={65} cy={65} r={60} fill="none" stroke={C.teal} strokeWidth={3} pathLength={1} strokeDasharray={1} strokeDashoffset={1 - check} />
+                  <circle cx={65} cy={65} r={60} fill="none" stroke={C.green} strokeWidth={4} pathLength={1} strokeDasharray={1} strokeDashoffset={1 - check} />
                 </svg>
                 <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Icon name={o.icon} at={o.at + 0.2} size={64} />
+                  <Icon name={o.icon} at={o.at + 0.2} size={64} color={i % 2 ? C.greenDeep : C.tealDeep} />
                 </div>
               </div>
               <div style={{ textAlign: 'right' }}>

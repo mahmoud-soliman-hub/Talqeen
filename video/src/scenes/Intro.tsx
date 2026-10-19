@@ -2,8 +2,9 @@ import React from 'react';
 import { AbsoluteFill, Img, staticFile } from 'remotion';
 import { Divider } from '../components/Ornaments';
 import { Label, Wipe, Words } from '../components/Type';
-import { Diamond, Icon, Photo } from '../components/Visual';
+import { Diamond, Icon, Media, Photo } from '../components/Visual';
 import { C } from '../theme';
+import { MEDIA } from '../media';
 import { font, k, useT, win } from '../lib';
 
 // 0:00 — logo assembles, then the slogan.
@@ -84,7 +85,7 @@ export const Founding: React.FC = () => {
   ];
   return (
     <AbsoluteFill>
-      <Photo src="img/01-quran-light.jpg" w={600} h={820} at={8.3} span={17} shape="arch" pos="78% 78%" style={{ position: 'absolute', left: 170, top: 150 }} />
+      <Photo src={MEDIA["s01-founding"]} w={600} h={820} at={7.85} span={17} shape="arch" pos="78% 78%" style={{ position: 'absolute', left: 170, top: 150 }} />
       <div style={{ position: 'absolute', right: 170, top: 200, width: 920, textAlign: 'right' }}>
         <Label at={8.4}>عن الجمعية</Label>
         <div style={{ position: 'relative', marginTop: 20 }}>
@@ -144,7 +145,7 @@ export const Founding: React.FC = () => {
                 const p = k(t, at, at + 0.7);
                 return (
                   <div key={text} style={{ display: 'flex', alignItems: 'center', gap: 34, height: 115, direction: 'rtl' }}>
-                    <Diamond size={24} fill={p > 0.5 ? C.teal : C.bg} stroke={C.teal} style={{ opacity: p }} />
+                    <Diamond size={24} fill={p > 0.5 ? (i % 2 ? C.green : C.teal) : C.bg} stroke={i % 2 ? C.green : C.teal} style={{ opacity: p }} />
                     <Wipe at={at} dur={0.8}>
                       <p style={font(i === 2 ? 56 : 50, i === 2 ? 700 : 300, i === 2 ? C.tealDeep : C.ink)}>{text}</p>
                     </Wipe>
@@ -172,15 +173,10 @@ export const Aims: React.FC = () => {
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ opacity: img }}>
-        <Img
-          src={staticFile('img/02-halaqa.jpg')}
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            objectPosition: '50% 60%',
-            transform: `scale(${1.12 - 0.08 * k(t, 24.9, 40.3, (x) => x)}) translateX(${-30 * k(t, 24.9, 40.3, (x) => x)}px)`,
-          }}
+        <Media
+          src={MEDIA['s02-aims']}
+          pos="50% 60%"
+          style={{ transform: `scale(${1.12 - 0.08 * k(t, 24.9, 40.3, (x) => x)}) translateX(${-30 * k(t, 24.9, 40.3, (x) => x)}px)` }}
         />
         <AbsoluteFill
           style={{
@@ -195,7 +191,7 @@ export const Aims: React.FC = () => {
         <Words segs={[{ s: 25.52, e: 28.6, text: 'صناعة نخبة من المتقنين' }]} size={86} weight={700} hot={['المتقنين']} lineHeight={1.3} />
         <Words segs={[{ s: 28.6, e: 31.09, text: 'وتأهيل كفاءات تعليمية جادة' }]} size={54} color={C.inkSoft} style={{ marginTop: 10 }} />
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '34px 40px', marginTop: 60, direction: 'rtl' }}>
-          {feats.map(({ at, icon, text }) => {
+          {feats.map(({ at, icon, text }, i) => {
             const p = k(t, at, at + 0.7);
             return (
               <div key={text} style={{ display: 'flex', alignItems: 'center', gap: 22, opacity: p, transform: `translateY(${(1 - p) * 20}px)` }}>
@@ -212,7 +208,7 @@ export const Aims: React.FC = () => {
                     flexShrink: 0,
                   }}
                 >
-                  <Icon name={icon} at={at + 0.1} size={50} />
+                  <Icon name={icon} at={at + 0.1} size={50} color={i % 2 ? C.greenDeep : C.tealDeep} />
                 </div>
                 <p style={font(40, 700, C.ink)}>{text}</p>
               </div>

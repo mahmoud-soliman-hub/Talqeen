@@ -1,6 +1,6 @@
 import React from 'react';
 import { AbsoluteFill, Audio, Img, Sequence, staticFile, useCurrentFrame } from 'remotion';
-import { Backdrop, CUTS } from './components/Backdrop';
+import { Backdrop, CUTS, Motes } from './components/Backdrop';
 import { archPathAt } from './components/Ornaments';
 import { EASE_IO, SceneStart, k } from './lib';
 import { C, FPS, H, W } from './theme';
@@ -17,6 +17,16 @@ type Kind = 'arch' | 'light' | 'pattern' | 'push';
 const KINDS: Kind[] = ['arch', 'light', 'pattern', 'arch', 'push', 'pattern', 'light', 'push', 'pattern', 'arch', 'light'];
 const SCENES: React.FC[] = [Opening, Founding, Aims, Governance, Vision, Mission, Values, Goals, Outputs, Programs, Sustainability, Outro];
 
+// Pattern band: centre x at mid-height, and the seam it drags across the frame (tilted 14°).
+const BAND_TILT = Math.tan((14 * Math.PI) / 180) * (H / 2);
+const bandX = (p: number) => W + 700 - (W + 1400) * p;
+const seam = (p: number, side: 'in' | 'out') => {
+  const c = bandX(p);
+  return side === 'in'
+    ? `polygon(${c + BAND_TILT}px 0, ${W + 50}px 0, ${W + 50}px ${H}px, ${c - BAND_TILT}px ${H}px)`
+    : `polygon(-50px 0, ${c + BAND_TILT}px 0, ${c - BAND_TILT}px ${H}px, -50px ${H}px)`;
+};
+
 const bell = (p: number) => Math.sin(Math.PI * Math.max(0, Math.min(1, p)));
 const lerp = (a: number, b: number, p: number) => a + (b - a) * p;
 
@@ -32,7 +42,7 @@ const enterStyle = (kind: Kind, p: number): React.CSSProperties => {
     case 'light':
       return { opacity: k(p, 0.42, 0.62), transform: `scale(${lerp(1.07, 1, p)})` };
     case 'pattern':
-      return { opacity: p > 0.5 ? 1 : 0, transform: `translateX(${lerp(260, 0, k(p, 0.5, 1))}px)` };
+      return { clipPath: seam(p, 'in') };
     case 'push':
       return { transform: `translateX(${lerp(-W, 0, p)}px)`, boxShadow: '40px 0 80px -20px rgba(60,70,60,0.25)' };
   }
@@ -46,7 +56,7 @@ const leaveStyle = (kind: Kind, q: number): React.CSSProperties => {
     case 'light':
       return { opacity: 1 - k(q, 0.38, 0.55), transform: `scale(${lerp(1, 1.05, q)}) translateX(${lerp(0, -60, q)}px)` };
     case 'pattern':
-      return { opacity: q < 0.5 ? 1 : 0, transform: `translateX(${lerp(0, -260, k(q, 0, 0.5))}px)` };
+      return { clipPath: seam(q, 'out') };
     case 'push':
       return { transform: `translateX(${lerp(0, W * 0.35, q)}px) scale(${lerp(1, 0.94, q)})`, opacity: lerp(1, 0.15, q) };
   }
@@ -60,7 +70,6 @@ const SceneSlot: React.FC<{ i: number; start: number; children: React.ReactNode 
   const q = cout === null ? 0 : k(t, cout - D / 2, cout + D / 2, EASE_IO);
   const a = cin === null ? {} : enterStyle(KINDS[i - 1], p);
   const b = cout === null ? {} : leaveStyle(KINDS[i], q);
-  const drift = 1 + 0.025 * k(t, cin ?? 0, cout ?? DURATION, (x) => x);
   return (
     <AbsoluteFill style={q > 0 ? b : a}>
       {cin !== null && p < 1 && (KINDS[i - 1] === 'arch' || KINDS[i - 1] === 'push') && (
@@ -69,7 +78,7 @@ const SceneSlot: React.FC<{ i: number; start: number; children: React.ReactNode 
           <AbsoluteFill style={{ background: 'radial-gradient(ellipse 50% 60% at 50% 60%, rgba(255,253,245,0.9), rgba(255,253,245,0))', opacity: 1 - p }} />
         </AbsoluteFill>
       )}
-      <AbsoluteFill style={{ transform: `scale(${drift})` }}>{children}</AbsoluteFill>
+      <AbsoluteFill>{children}</AbsoluteFill>
     </AbsoluteFill>
   );
 };
@@ -97,7 +106,7 @@ const Overlay: React.FC = () => {
           const x = lerp(120, -40, p);
           return (
             <AbsoluteFill key={c} style={{ pointerEvents: 'none' }}>
-              <AbsoluteFill style={{ background: '#FFFDF6', opacity: 0.85 * Math.pow(bell(p), 1.6) }} />
+              <AbsoluteFill style={{ background: '#FFFDF6', opacity: 0.55 * Math.pow(bell(p), 2) }} />
               <AbsoluteFill
                 style={{
                   background: `linear-gradient(100deg, rgba(255,250,232,0) ${x - 30}%, rgba(255,246,220,0.95) ${x}%, rgba(255,250,232,0) ${x + 30}%)`,
@@ -108,30 +117,31 @@ const Overlay: React.FC = () => {
           );
         }
         if (kind === 'pattern') {
-          const x = lerp(W + 1700, -W - 1700, p);
+          const x = bandX(p);
           return (
             <div
               key={c}
               style={{
                 position: 'absolute',
-                left: x - 1300 + W / 2,
-                top: -700,
-                width: 2600,
-                height: H + 1400,
+                left: x - 450,
+                top: -400,
+                width: 900,
+                height: H + 800,
                 transform: 'rotate(14deg)',
-                background: `linear-gradient(90deg, rgba(157,207,148,0) 0%, ${C.green} 12%, ${C.teal} 50%, ${C.tealDeep} 88%, rgba(30,147,166,0) 100%)`,
+                background: `linear-gradient(90deg, rgba(166,211,148,0) 0%, ${C.green} 22%, ${C.teal} 55%, ${C.tealDeep} 80%, rgba(30,147,166,0) 100%)`,
                 overflow: 'hidden',
+                boxShadow: '0 0 120px 40px rgba(255,253,245,0.55)',
               }}
             >
-              {[0, 1, 2, 3, 4, 5, 6, 7].map((r) => (
+              {[0, 1, 2, 3, 4, 5].map((r) => (
                 <Img
                   key={r}
                   src={staticFile('brand/pattern-band-bold.png')}
-                  style={{ position: 'absolute', left: -300, top: 120 + r * 330, width: 3200, opacity: 0.18, filter: 'brightness(4)' }}
+                  style={{ position: 'absolute', left: -600, top: 60 + r * 330, width: 2200, opacity: 0.22, filter: 'brightness(4)' }}
                 />
               ))}
-              <div style={{ position: 'absolute', left: 300, top: 0, bottom: 0, width: 3, background: C.goldSoft }} />
-              <div style={{ position: 'absolute', right: 300, top: 0, bottom: 0, width: 3, background: C.goldSoft }} />
+              <div style={{ position: 'absolute', left: 200, top: 0, bottom: 0, width: 2, background: C.goldSoft }} />
+              <div style={{ position: 'absolute', right: 200, top: 0, bottom: 0, width: 2, background: C.goldSoft }} />
             </div>
           );
         }
@@ -159,6 +169,7 @@ export const Main: React.FC = () => (
         </Sequence>
       );
     })}
+    <Motes front />
     <Overlay />
     <Audio src={staticFile('voiceover.mp3')} />
     <Audio src={staticFile('sfx.wav')} volume={0.55} />
