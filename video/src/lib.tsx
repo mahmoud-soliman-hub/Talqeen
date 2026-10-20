@@ -1,14 +1,14 @@
 import React, { createContext, useContext } from 'react';
 import { Easing, interpolate, useCurrentFrame } from 'remotion';
 import { C, FONT, FPS } from './theme';
+import { inv } from './timeline';
 
-// Every scene works in absolute voiceover seconds: t = scene start + local frame.
+// Every scene works in absolute voiceover seconds. The context holds the scene's start in film
+// seconds; film time maps back to voiceover time, which holds still while an agenda gap plays.
 const StartCtx = createContext(0);
 export const SceneStart = StartCtx.Provider;
-export const useT = () => {
-  const start = useContext(StartCtx);
-  return start + useCurrentFrame() / FPS;
-};
+export const useFilmT = () => useContext(StartCtx) + useCurrentFrame() / FPS;
+export const useT = () => inv(useFilmT());
 
 export const EASE = Easing.bezier(0.22, 1, 0.36, 1);
 export const EASE_IO = Easing.bezier(0.65, 0, 0.35, 1);

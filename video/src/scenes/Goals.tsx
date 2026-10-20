@@ -179,7 +179,7 @@ export const Outputs: React.FC = () => {
   return (
     <AbsoluteFill>
       <div style={{ position: 'absolute', right: 160, top: 110 }}>
-        <Title text="المخرجات المتوقعة" at={130.65} size={110} />
+        <Title text="المخرجات المتوقعة" at={131.0} size={110} />
       </div>
       <div
         style={{

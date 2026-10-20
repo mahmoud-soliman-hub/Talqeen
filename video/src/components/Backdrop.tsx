@@ -2,9 +2,11 @@ import React from 'react';
 import { AbsoluteFill, Img, staticFile, useCurrentFrame } from 'remotion';
 import { C, FPS, H, W } from '../theme';
 import { EASE, k } from '../lib';
+import { GAPS, fwd } from '../timeline';
 
 // Scene cuts in seconds; the background camera drifts a step at each one (parallax against the scenes).
-export const CUTS = [8.35, 25.05, 40.05, 50.95, 63.15, 82.35, 89.95, 130.75, 162.05, 188.35, 209.65];
+// Camera steps at every scene change (film seconds).
+const CUTS = [...GAPS.map((g) => fwd(g.at) + g.add / 2), fwd(25.05), fwd(40.05), fwd(209.65)].sort((a, b) => a - b);
 
 const camX = (t: number) => CUTS.reduce((x, c, i) => x + k(t, c - 0.6, c + 0.9, EASE) * (i % 2 ? -1 : 1) * 70, 0);
 const camY = (t: number) => CUTS.reduce((y, c, i) => y + k(t, c - 0.6, c + 0.9, EASE) * (i % 3 === 0 ? 24 : -16), 0);

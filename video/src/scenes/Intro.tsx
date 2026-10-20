@@ -47,8 +47,13 @@ export const Opening: React.FC = () => {
           src={staticFile('brand/wordmark-tagline.png')}
           style={{ height: 46, opacity: tag, transform: `translateY(${(1 - tag) * 14}px)` }}
         />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 14, opacity: k(t, 2.7, 3.6), transform: `translateY(${(1 - k(t, 2.7, 3.6)) * 12}px)` }}>
+          <div style={{ width: 46, height: 2, background: C.green }} />
+          <p style={{ ...font(40, 700, '#727373'), lineHeight: 1.2 }}>بمنطقة تبوك</p>
+          <div style={{ width: 46, height: 2, background: C.green }} />
+        </div>
       </div>
-      <div style={{ position: 'absolute', top: 735, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div style={{ position: 'absolute', top: 790, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Divider width={640} progress={k(t, 4.5, 5.6)} />
         <div style={{ height: 22, opacity: 0 }} />
         <Words

@@ -37,7 +37,23 @@ def swell():
     y = np.sin(2 * np.pi * (55 + 8 * t) * t) * 0.6 + np.sin(2 * np.pi * 110 * t) * 0.15
     return y * np.sin(np.pi * np.clip(t / 2.4, 0, 1)) ** 1.5 * 0.5
 
-VOICES = {'whoosh': whoosh, 'chime': chime, 'chime_low': lambda: chime(587.3), 'tick': tick, 'swell': swell}
+def paper(d=0.22):
+    """Soft page-turn rustle: airy band-limited noise with a quick swell, no pitch."""
+    n = int(d * SR); t = np.arange(n) / SR
+    x = rng.standard_normal(n)
+    x = lowpass(x, 5200) - lowpass(x, 1400)
+    shape = np.sin(np.pi * np.clip(t / d, 0, 1)) ** 1.5 * (1 + 0.35 * np.sin(2 * np.pi * 23 * t))
+    return x * shape * 0.32
+
+def zoom(d=1.4):
+    """Long rising air for the agenda zoom-in."""
+    n = int(d * SR); t = np.arange(n) / SR
+    x = rng.standard_normal(n)
+    x = lowpass(x, 2600) - lowpass(x, 300)
+    shape = np.clip(t / d, 0, 1) ** 2.2 * np.exp(-np.maximum(0, t - d * 0.85) * 18)
+    return x * shape * 0.5
+
+VOICES = {'whoosh': whoosh, 'chime': chime, 'chime_low': lambda: chime(587.3), 'tick': paper, 'paper': paper, 'zoom': zoom, 'swell': swell}
 
 cues = json.load(open(sys.argv[1])); dur = float(sys.argv[3])
 out = np.zeros((int(dur * SR) + SR, ), dtype=np.float64)

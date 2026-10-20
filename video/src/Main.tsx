@@ -1,6 +1,6 @@
 import React from 'react';
 import { AbsoluteFill, Audio, Img, Sequence, staticFile, useCurrentFrame } from 'remotion';
-import { Backdrop, CUTS, Motes } from './components/Backdrop';
+import { Backdrop, Motes } from './components/Backdrop';
 import { archPathAt } from './components/Ornaments';
 import { EASE_IO, SceneStart, k } from './lib';
 import { C, FPS, H, W } from './theme';
@@ -8,14 +8,22 @@ import { Aims, Founding, Opening } from './scenes/Intro';
 import { Governance, Mission, Values, Vision } from './scenes/Identity';
 import { Goals, Outputs } from './scenes/Goals';
 import { Outro, Programs, Sustainability } from './scenes/Projects';
+import { Agenda, TILE, tileBox } from './scenes/Agenda';
+import { DURATION, GAPS, Gap, fwd, gapEnd, gapStart } from './timeline';
 
-export const DURATION = 216;
+export { DURATION };
 const D = 1.1; // transition length (s)
 
 type Kind = 'arch' | 'light' | 'pattern' | 'push';
-// Transition used at each cut (same order as CUTS).
-const KINDS: Kind[] = ['arch', 'light', 'pattern', 'arch', 'push', 'pattern', 'light', 'push', 'pattern', 'arch', 'light'];
 const SCENES: React.FC[] = [Opening, Founding, Aims, Governance, Vision, Mission, Values, Goals, Outputs, Programs, Sustainability, Outro];
+// Scene boundaries in voiceover seconds. A section boundary is an agenda gap; the rest keep a cut transition.
+const BOUNDS = [7.9, 25.05, 40.05, 50.95, 63.15, 82.35, 89.95, 130.75, 162.05, 188.35, 209.65];
+const CUT_KIND: Record<number, Kind> = { 25.05: 'light', 40.05: 'pattern', 209.65: 'light' };
+const gapAt = (o: number): Gap | undefined => GAPS.find((g) => g.at === o);
+// Plain cuts in film seconds, for the overlay flourishes.
+const CUTS = BOUNDS.filter((b) => !gapAt(b)).map((b) => ({ t: fwd(b), kind: CUT_KIND[b] }));
+const SHRINK = 0.9; // seconds for a finished scene to fold back into its agenda card
+const OPEN = 0.35; // seconds for the next scene to open out of the zoomed card
 
 // Pattern band: centre x at mid-height, and the seam it drags across the frame (tilted 14°).
 const BAND_TILT = Math.tan((14 * Math.PI) / 180) * (H / 2);
@@ -62,22 +70,58 @@ const leaveStyle = (kind: Kind, q: number): React.CSSProperties => {
   }
 };
 
-const SceneSlot: React.FC<{ i: number; start: number; children: React.ReactNode }> = ({ i, start, children }) => {
-  const t = start + useCurrentFrame() / FPS;
-  const cin = i > 0 ? CUTS[i - 1] : null;
-  const cout = i < CUTS.length ? CUTS[i] : null;
-  const p = cin === null ? 1 : k(t, cin - D / 2, cin + D / 2, EASE_IO);
-  const q = cout === null ? 0 : k(t, cout - D / 2, cout + D / 2, EASE_IO);
-  const a = cin === null ? {} : enterStyle(KINDS[i - 1], p);
-  const b = cout === null ? {} : leaveStyle(KINDS[i], q);
+// Window of scene i in film seconds.
+const windowOf = (i: number) => {
+  const bIn = i > 0 ? BOUNDS[i - 1] : null;
+  const bOut = i < BOUNDS.length ? BOUNDS[i] : null;
+  const gIn = bIn === null ? undefined : gapAt(bIn);
+  const gOut = bOut === null ? undefined : gapAt(bOut);
+  const start = bIn === null ? 0 : gIn ? gapEnd(gIn) - OPEN : fwd(bIn) - D / 2;
+  const end = bOut === null ? DURATION : gOut ? gapStart(gOut) + (gOut.item === 0 ? 0.8 : SHRINK + 0.45) : fwd(bOut) + D / 2;
+  return { bIn, bOut, gIn, gOut, start, end };
+};
+
+const SceneSlot: React.FC<{ i: number; children: React.ReactNode }> = ({ i, children }) => {
+  const w = windowOf(i);
+  const n = w.start + useCurrentFrame() / FPS;
+  let style: React.CSSProperties = {};
+  let opaque = false;
+  // leaving
+  if (w.gOut && n >= gapStart(w.gOut)) {
+    const u = n - gapStart(w.gOut);
+    if (w.gOut.item === 0) {
+      style = { opacity: 1 - k(u, 0, 0.7), transform: `scale(${1 + 0.06 * k(u, 0, 0.7)})` };
+    } else {
+      const p = k(u, 0, SHRINK, EASE_IO);
+      const box = tileBox(w.gOut.item - 1);
+      const s = lerp(1, TILE.w / W, p);
+      const sideInset = ((W - H * (TILE.w / TILE.h)) / 2) * p;
+      style = {
+        transform: `translate(${(box.cx - W / 2) * p}px, ${(box.cy - H / 2) * p}px) scale(${s})`,
+        clipPath: `inset(0 ${sideInset}px round ${lerp(0, 28 / (TILE.w / W), p)}px)`,
+        opacity: 1 - k(u, SHRINK, SHRINK + 0.4),
+      };
+      opaque = true;
+    }
+  } else if (w.bOut !== null && !w.gOut) {
+    const q = k(n, fwd(w.bOut) - D / 2, fwd(w.bOut) + D / 2, EASE_IO);
+    if (q > 0) style = leaveStyle(CUT_KIND[w.bOut], q);
+  }
+  // entering
+  if (w.gIn && n < gapEnd(w.gIn)) {
+    const p = k(n, gapEnd(w.gIn) - OPEN, gapEnd(w.gIn));
+    style = { opacity: p, transform: `scale(${lerp(1.06, 1, p)})` };
+    opaque = true;
+  } else if (w.bIn !== null && !w.gIn) {
+    const p = k(n, fwd(w.bIn) - D / 2, fwd(w.bIn) + D / 2, EASE_IO);
+    if (p < 1) {
+      style = enterStyle(CUT_KIND[w.bIn], p);
+      opaque = CUT_KIND[w.bIn] === 'arch' || CUT_KIND[w.bIn] === 'push';
+    }
+  }
   return (
-    <AbsoluteFill style={q > 0 ? b : a}>
-      {cin !== null && p < 1 && (KINDS[i - 1] === 'arch' || KINDS[i - 1] === 'push') && (
-        <AbsoluteFill>
-          <Backdrop offset={start} />
-          <AbsoluteFill style={{ background: 'radial-gradient(ellipse 50% 60% at 50% 60%, rgba(255,253,245,0.9), rgba(255,253,245,0))', opacity: 1 - p }} />
-        </AbsoluteFill>
-      )}
+    <AbsoluteFill style={style}>
+      {opaque && <Backdrop offset={w.start} />}
       <AbsoluteFill>{children}</AbsoluteFill>
     </AbsoluteFill>
   );
@@ -88,10 +132,9 @@ const Overlay: React.FC = () => {
   const t = useCurrentFrame() / FPS;
   return (
     <>
-      {CUTS.map((c, i) => {
+      {CUTS.map(({ t: c, kind }) => {
         const p = k(t, c - D / 2, c + D / 2, EASE_IO);
         if (p <= 0 || p >= 1) return null;
-        const kind = KINDS[i];
         if (kind === 'arch') {
           const w = lerp(0, 4300, Math.pow(p, 2.2));
           const hh = w * 1.3;
@@ -156,13 +199,13 @@ const Overlay: React.FC = () => {
 export const Main: React.FC = () => (
   <AbsoluteFill style={{ overflow: 'hidden' }}>
     <Backdrop />
+    <Agenda />
     {SCENES.map((Scene, i) => {
-      const start = i === 0 ? 0 : CUTS[i - 1] - D / 2;
-      const end = i === SCENES.length - 1 ? DURATION : CUTS[i] + D / 2;
+      const { start, end } = windowOf(i);
       return (
         <Sequence key={i} from={Math.round(start * FPS)} durationInFrames={Math.round((end - start) * FPS)}>
           <SceneStart value={start}>
-            <SceneSlot i={i} start={start}>
+            <SceneSlot i={i}>
               <Scene />
             </SceneSlot>
           </SceneStart>
@@ -171,8 +214,7 @@ export const Main: React.FC = () => (
     })}
     <Motes front />
     <Overlay />
-    <Audio src={staticFile('voiceover.mp3')} />
+    <Audio src={staticFile('vo_film.wav')} />
     <Audio src={staticFile('sfx.wav')} volume={0.55} />
   </AbsoluteFill>
 );
-

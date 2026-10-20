@@ -102,7 +102,7 @@ export const Programs: React.FC = () => {
                   ...font(460, 700, 'transparent'),
                   position: 'absolute',
                   WebkitTextStroke: `3px ${C.teal}`,
-                  opacity: ghost * (0.85 - 0.6 * k(t, p.nameAt - 0.4, p.nameAt + 0.6)),
+                  opacity: ghost * 0.85 * (1 - k(t, p.nameAt - 0.5, p.nameAt + 0.2)),
                   lineHeight: 1,
                   direction: 'ltr',
                   transform: `scale(${1.08 - 0.08 * ghost})`,
@@ -214,7 +214,12 @@ export const Outro: React.FC = () => {
           src={staticFile('brand/logo-vertical.png')}
           style={{ height: 380, opacity: logo, transform: `translateY(${(1 - logo) * 30}px) scale(${0.95 + 0.05 * logo})` }}
         />
-        <div style={{ height: 40 }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 14, opacity: k(t, 210.8, 211.6), transform: `translateY(${(1 - k(t, 210.8, 211.6)) * 12}px)` }}>
+          <div style={{ width: 46, height: 2, background: C.green }} />
+          <p style={{ ...font(40, 700, '#727373'), lineHeight: 1.2 }}>بمنطقة تبوك</p>
+          <div style={{ width: 46, height: 2, background: C.green }} />
+        </div>
+        <div style={{ height: 34 }} />
         <Divider width={640} progress={k(t, 210.8, 211.8)} />
         <div style={{ height: 30 }} />
         <div style={{ display: 'flex', gap: 80, direction: 'ltr' }}>

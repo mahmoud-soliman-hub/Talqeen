@@ -110,7 +110,7 @@ export const Mission: React.FC = () => {
   return (
     <AbsoluteFill>
       <div style={{ position: 'absolute', right: 160, top: 110, width: 1600, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', direction: 'rtl' }}>
-        <Title text="الرسالة" at={63.05} size={140} />
+        <Title text="الرسالة" at={63.4} size={140} />
         <div style={{ width: 860, textAlign: 'left', paddingBottom: 26 }}>
           <Words segs={[{ s: 65.07, e: 68.36, text: 'تقديم بيئة تعليمية قرآنية نموذجية' }]} size={56} weight={700} hot={['نموذجية']} />
         </div>
