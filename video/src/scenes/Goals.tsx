@@ -6,6 +6,7 @@ import { Diamond, Icon, Media } from '../components/Visual';
 import { C } from '../theme';
 import { MEDIA } from '../media';
 import { font, k, useT, win } from '../lib';
+import { useL } from '../layout';
 
 const GOALS: { n: string; at: number; end: number; img: string; pos: string; tint?: string; segs: Seg[]; hot: string[] }[] = [
   {
@@ -62,8 +63,9 @@ export const Goals: React.FC = () => {
   const active = GOALS.reduce((a, g, i) => (t >= g.at - 0.3 ? i : a), -1);
   const shown = k(t, 92.6, 93.4);
   const roll = GOALS.reduce((a, g, i) => a + (i ? k(t, g.at - 0.35, g.at + 0.45) : 0), 0);
-  const AW = 620;
-  const AH = 760;
+  const { V } = useL();
+  const AW = V ? 560 : 620;
+  const AH = V ? 700 : 760;
   const d = archPath(AW, AH);
   const perim = AW * 2 + AH * 2.2;
   return (
@@ -74,7 +76,7 @@ export const Goals: React.FC = () => {
         <Divider width={600} progress={k(t, 91.0, 92.2)} />
       </AbsoluteFill>
       {/* one arch for all four goals; each new image wipes in right-to-left */}
-      <div style={{ position: 'absolute', left: 170, top: 170, width: AW, height: AH, opacity: shown }}>
+      <div style={{ position: 'absolute', left: V ? 260 : 170, top: V ? 170 : 170, width: AW, height: AH, opacity: shown }}>
         <div style={{ position: 'absolute', inset: 0, clipPath: `path('${d}')` }}>
           {GOALS.map((g, i) => {
             const p = i === 0 ? 1 : k(t, g.at - 0.45, g.at + 0.55);
@@ -99,7 +101,7 @@ export const Goals: React.FC = () => {
           />
         </svg>
       </div>
-      <div style={{ position: 'absolute', right: 170, top: 190, width: 860, textAlign: 'right', opacity: shown }}>
+      <div style={{ position: 'absolute', right: V ? 80 : 170, top: V ? 920 : 190, width: V ? 920 : 860, textAlign: 'right', opacity: shown }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 24, direction: 'rtl' }}>
           <div style={{ height: 200, overflow: 'hidden' }}>
             <div style={{ transform: `translateY(${-roll * 200}px)` }}>
@@ -128,7 +130,7 @@ export const Goals: React.FC = () => {
                 style={{
                   position: 'absolute',
                   right: 0,
-                  width: 860,
+                  width: V ? 920 : 860,
                   opacity: 1 - e,
                   transform: `translateY(${-50 * e}px)`,
                   clipPath: `inset(-10% 0 ${e * 100}% 0)`,
@@ -144,8 +146,8 @@ export const Goals: React.FC = () => {
       <div
         style={{
           position: 'absolute',
-          right: 170,
-          bottom: 110,
+          right: V ? 80 : 170,
+          bottom: V ? 160 : 110,
           display: 'flex',
           gap: 26,
           direction: 'rtl',
@@ -176,19 +178,20 @@ const OUTS = [
 export const Outputs: React.FC = () => {
   const t = useT();
   const active = OUTS.reduce((a, o, i) => (t >= o.at - 0.2 ? i : a), -1);
+  const { V } = useL();
   return (
     <AbsoluteFill>
-      <div style={{ position: 'absolute', right: 160, top: 110 }}>
+      <div style={{ position: 'absolute', right: V ? 80 : 160, top: V ? 200 : 110 }}>
         <Title text="المخرجات المتوقعة" at={131.0} size={110} />
       </div>
       <div
         style={{
           position: 'absolute',
-          left: 160,
-          right: 160,
-          top: 400,
+          left: V ? 80 : 160,
+          right: V ? 80 : 160,
+          top: V ? 520 : 400,
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
+          gridTemplateColumns: V ? '1fr' : '1fr 1fr',
           gap: 36,
           direction: 'rtl',
         }}

@@ -6,6 +6,7 @@ import { Diamond, Icon, Media, Photo } from '../components/Visual';
 import { C } from '../theme';
 import { MEDIA } from '../media';
 import { font, k, kashida, useT, win } from '../lib';
+import { useL } from '../layout';
 
 const PROGRAMS = [
   { n: '01', name: 'بناء', title: 'برنامج التأسيس', at: 165.42, nameAt: 167.85, end: 169.5 },
@@ -16,20 +17,34 @@ const PROGRAMS = [
 ];
 
 // Ascending journey track: all five together at the section title, then one per scene.
+// Landscape: a rising diagonal; vertical: a zig-zag ladder climbing the frame.
 const Journey: React.FC<{ active: number; reveal: number; big?: boolean }> = ({ active, reveal, big }) => {
   const t = useT();
+  const { V } = useL();
+  const JW = V ? 920 : 1400;
+  const step = JW / 4;
+  const ladder = V && big;
+  const pos = (i: number) =>
+    ladder ? { x: JW / 2 + (i % 2 ? -190 : 190), y: 820 - 175 * i } : { x: JW - step * i, y: big ? 300 - 60 * i : 40 };
+  const HT = ladder ? 900 : big ? 360 : 140;
+  const pts = PROGRAMS.map((_, i) => pos(i));
+  const total = pts.slice(1).reduce((s2, p2, i) => s2 + Math.hypot(p2.x - pts[i].x, p2.y - pts[i].y), 0);
   return (
-    <div style={{ position: 'relative', height: big ? 360 : 140, direction: 'rtl' }}>
-      <svg width={1400} height={big ? 360 : 140} style={{ position: 'absolute', inset: 0, overflow: 'visible' }}>
-        <line x1={1400} y1={big ? 300 : 40} x2={1400 - 1400 * reveal} y2={big ? 300 - 240 * reveal : 40} stroke={C.goldSoft} strokeWidth={2} />
-        {active >= 0 && !big && (
-          <line x1={1400} y1={40} x2={1400 - 350 * active} y2={40} stroke={C.green} strokeWidth={4} />
-        )}
+    <div style={{ position: 'relative', height: HT, direction: 'rtl' }}>
+      <svg width={JW} height={HT} style={{ position: 'absolute', inset: 0, overflow: 'visible' }}>
+        <polyline
+          points={pts.map((p2) => `${p2.x},${p2.y}`).join(' ')}
+          fill="none"
+          stroke={C.goldSoft}
+          strokeWidth={2}
+          strokeDasharray={total}
+          strokeDashoffset={total * (1 - reveal)}
+        />
+        {active >= 0 && !big && <line x1={JW} y1={40} x2={JW - step * active} y2={40} stroke={C.green} strokeWidth={4} />}
       </svg>
       <div style={{ position: 'absolute', inset: 0 }}>
         {PROGRAMS.map((p, i) => {
-          const x = 1400 - 350 * i;
-          const y = big ? 300 - 60 * i : 40;
+          const { x, y } = pos(i);
           const appear = big ? k(t, 162.9 + i * 0.22, 163.5 + i * 0.22) : 1;
           const on = i <= active;
           const cur = i === active;
@@ -72,13 +87,14 @@ export const Programs: React.FC = () => {
   const overview = win(t, 162.2, 165.6, 0.45);
   const active = PROGRAMS.findIndex((p) => t >= p.at - 0.25 && t < p.end);
   const track = k(t, 165.2, 165.9);
+  const { V } = useL();
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ opacity: overview, alignItems: 'center' }}>
-        <div style={{ marginTop: 120 }}>
-          <Title text="المشاريع التعليمية" at={162.7} size={110} align="center" />
+        <div style={{ marginTop: V ? 260 : 120 }}>
+          <Title text="المشاريع التعليمية" at={162.7} size={V ? 100 : 110} align="center" />
         </div>
-        <div style={{ position: 'absolute', left: 260, top: 470, width: 1400 }}>
+        <div style={{ position: 'absolute', left: V ? 80 : 260, top: V ? 560 : 470, width: V ? 920 : 1400 }}>
           <Journey active={-1} reveal={k(t, 162.8, 164.6)} big />
         </div>
       </AbsoluteFill>
@@ -91,7 +107,7 @@ export const Programs: React.FC = () => {
             key={p.n}
             style={{ alignItems: 'center', opacity: 1 - e, transform: `translateY(${-70 * e}px) scale(${1 - 0.04 * e})`, clipPath: `inset(-5% 0 ${e * 60}% 0)` }}
           >
-            <div style={{ marginTop: 120 }}>
+            <div style={{ marginTop: V ? 480 : 120 }}>
               <Wipe at={p.at + 0.2} dur={0.8}>
                 <p style={{ ...font(54, 300, C.tealDeep), textAlign: 'center' }}>{p.title}</p>
               </Wipe>
@@ -111,14 +127,14 @@ export const Programs: React.FC = () => {
                 {p.n}
               </span>
               <Wipe at={p.nameAt - 0.25} dur={1}>
-                <p style={{ ...font(230, 700, C.ink), lineHeight: 1.15 }}>{kashida(p.name, 3)}</p>
+                <p style={{ ...font(V ? 190 : 230, 700, C.ink), lineHeight: 1.15 }}>{kashida(p.name, 3)}</p>
               </Wipe>
             </div>
             <Divider width={560} progress={k(t, p.nameAt, p.nameAt + 1)} />
           </AbsoluteFill>
         );
       })}
-      <div style={{ position: 'absolute', left: 260, bottom: 150, width: 1400, opacity: track * (1 - k(t, 188.0, 188.5)) }}>
+      <div style={{ position: 'absolute', left: V ? 80 : 260, bottom: V ? 380 : 150, width: V ? 920 : 1400, opacity: track * (1 - k(t, 188.0, 188.5)) }}>
         <Journey active={active} reveal={1} />
       </div>
     </AbsoluteFill>
@@ -136,14 +152,24 @@ const SUSTAIN = [
 export const Sustainability: React.FC = () => {
   const t = useT();
   const active = SUSTAIN.reduce((a, s, i) => (t >= s.at - 0.2 ? i : a), -1);
+  const { V } = useL();
   return (
     <AbsoluteFill>
-      <Photo src={MEDIA["s11-waqf"]} w={560} h={800} at={187.85} span={22} shape="arch" pos="50% 55%" style={{ position: 'absolute', left: 170, top: 140 }} />
-      <div style={{ position: 'absolute', right: 160, top: 120, width: 1000 }}>
-        <Title text="مشاريع الاستدامة" at={188.75} size={110} />
+      <Photo
+        src={MEDIA["s11-waqf"]}
+        w={V ? 480 : 560}
+        h={V ? 600 : 800}
+        at={187.85}
+        span={22}
+        shape="arch"
+        pos="50% 55%"
+        style={{ position: 'absolute', left: V ? 300 : 170, top: V ? 170 : 140 }}
+      />
+      <div style={{ position: 'absolute', right: V ? 80 : 160, top: V ? 820 : 120, width: V ? 920 : 1000 }}>
+        <Title text="مشاريع الاستدامة" at={188.75} size={V ? 96 : 110} />
       </div>
       {/* active project, large */}
-      <div style={{ position: 'absolute', right: 160, top: 400, width: 1000, height: 200 }}>
+      <div style={{ position: 'absolute', right: V ? 80 : 160, top: V ? 1070 : 400, width: V ? 920 : 1000, height: 200 }}>
         {SUSTAIN.map((s, i) => {
           const o = win(t, s.at - 0.2, i < 4 ? SUSTAIN[i + 1].at - 0.1 : 212, 0.35);
           if (o <= 0) return null;
@@ -153,14 +179,14 @@ export const Sustainability: React.FC = () => {
                 <p style={{ ...font(36, 700, C.goldDeep) }}>مشروع</p>
               </Wipe>
               <Wipe at={s.nameAt - 0.2} dur={0.9}>
-                <p style={{ ...font(96, 700, C.ink), lineHeight: 1.3 }}>{s.name}</p>
+                <p style={{ ...font(V ? 84 : 96, 700, C.ink), lineHeight: 1.3 }}>{s.name}</p>
               </Wipe>
             </div>
           );
         })}
       </div>
       {/* all five */}
-      <div style={{ position: 'absolute', right: 160, top: 690, width: 1000, display: 'flex', gap: 20, direction: 'rtl' }}>
+      <div style={{ position: 'absolute', right: V ? 80 : 160, top: V ? 1360 : 690, width: V ? 920 : 1000, display: 'flex', gap: V ? 14 : 20, direction: 'rtl' }}>
         {SUSTAIN.map((s, i) => {
           const p = k(t, 189.4 + i * 0.25, 190.2 + i * 0.25);
           const on = i === active;

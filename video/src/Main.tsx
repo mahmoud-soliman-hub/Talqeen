@@ -3,12 +3,13 @@ import { AbsoluteFill, Audio, Img, Sequence, staticFile, useCurrentFrame } from 
 import { Backdrop, Motes } from './components/Backdrop';
 import { archPathAt } from './components/Ornaments';
 import { EASE_IO, SceneStart, k } from './lib';
-import { C, FPS, H, W } from './theme';
+import { C, FPS } from './theme';
+import { LANDSCAPE, Layout, LayoutProvider, VERTICAL, useL } from './layout';
 import { Aims, Founding, Opening } from './scenes/Intro';
 import { Governance, Mission, Values, Vision } from './scenes/Identity';
 import { Goals, Outputs } from './scenes/Goals';
 import { Outro, Programs, Sustainability } from './scenes/Projects';
-import { Agenda, TILE, tileBox } from './scenes/Agenda';
+import { Agenda, tileGrid } from './scenes/Agenda';
 import { DURATION, GAPS, Gap, fwd, gapEnd, gapStart } from './timeline';
 
 export { DURATION };
@@ -26,10 +27,12 @@ const SHRINK = 0.9; // seconds for a finished scene to fold back into its agenda
 const OPEN = 0.35; // seconds for the next scene to open out of the zoomed card
 
 // Pattern band: centre x at mid-height, and the seam it drags across the frame (tilted 14°).
-const BAND_TILT = Math.tan((14 * Math.PI) / 180) * (H / 2);
-const bandX = (p: number) => W + 700 - (W + 1400) * p;
-const seam = (p: number, side: 'in' | 'out') => {
-  const c = bandX(p);
+const tilt = ({ H }: Layout) => Math.tan((14 * Math.PI) / 180) * (H / 2);
+const bandX = ({ W }: Layout, p: number) => W + 700 - (W + 1400) * p;
+const seam = (L: Layout, p: number, side: 'in' | 'out') => {
+  const { W, H } = L;
+  const BAND_TILT = tilt(L);
+  const c = bandX(L, p);
   return side === 'in'
     ? `polygon(${c + BAND_TILT}px 0, ${W + 50}px 0, ${W + 50}px ${H}px, ${c - BAND_TILT}px ${H}px)`
     : `polygon(-50px 0, ${c + BAND_TILT}px 0, ${c - BAND_TILT}px ${H}px, -50px ${H}px)`;
@@ -39,7 +42,8 @@ const bell = (p: number) => Math.sin(Math.PI * Math.max(0, Math.min(1, p)));
 const lerp = (a: number, b: number, p: number) => a + (b - a) * p;
 
 // Style for a scene while it enters (p: 0→1) or leaves (q: 0→1) through a given transition.
-const enterStyle = (kind: Kind, p: number): React.CSSProperties => {
+const enterStyle = (L: Layout, kind: Kind, p: number): React.CSSProperties => {
+  const { W, H } = L;
   if (p >= 1) return {};
   switch (kind) {
     case 'arch': {
@@ -50,13 +54,14 @@ const enterStyle = (kind: Kind, p: number): React.CSSProperties => {
     case 'light':
       return { opacity: k(p, 0.42, 0.62), transform: `scale(${lerp(1.07, 1, p)})` };
     case 'pattern':
-      return { clipPath: seam(p, 'in') };
+      return { clipPath: seam(L, p, 'in') };
     case 'push':
       return { transform: `translateX(${lerp(-W, 0, p)}px)`, boxShadow: '40px 0 80px -20px rgba(60,70,60,0.25)' };
   }
 };
 
-const leaveStyle = (kind: Kind, q: number): React.CSSProperties => {
+const leaveStyle = (L: Layout, kind: Kind, q: number): React.CSSProperties => {
+  const { W } = L;
   if (q <= 0) return {};
   switch (kind) {
     case 'arch':
@@ -64,7 +69,7 @@ const leaveStyle = (kind: Kind, q: number): React.CSSProperties => {
     case 'light':
       return { opacity: 1 - k(q, 0.38, 0.55), transform: `scale(${lerp(1, 1.05, q)}) translateX(${lerp(0, -60, q)}px)` };
     case 'pattern':
-      return { clipPath: seam(q, 'out') };
+      return { clipPath: seam(L, q, 'out') };
     case 'push':
       return { transform: `translateX(${lerp(0, W * 0.35, q)}px) scale(${lerp(1, 0.94, q)})`, opacity: lerp(1, 0.15, q) };
   }
@@ -83,6 +88,9 @@ const windowOf = (i: number) => {
 
 const SceneSlot: React.FC<{ i: number; children: React.ReactNode }> = ({ i, children }) => {
   const w = windowOf(i);
+  const L = useL();
+  const { W, H } = L;
+  const { TILE, tileBox } = tileGrid(L);
   const n = w.start + useCurrentFrame() / FPS;
   let style: React.CSSProperties = {};
   let opaque = false;
@@ -94,18 +102,23 @@ const SceneSlot: React.FC<{ i: number; children: React.ReactNode }> = ({ i, chil
     } else {
       const p = k(u, 0, SHRINK, EASE_IO);
       const box = tileBox(w.gOut.item - 1);
-      const s = lerp(1, TILE.w / W, p);
-      const sideInset = ((W - H * (TILE.w / TILE.h)) / 2) * p;
+      // fold the frame into the card: crop to the card's aspect, then scale down onto it
+      const aspect = TILE.w / TILE.h;
+      const wide = W / H > aspect;
+      const end = wide ? TILE.h / H : TILE.w / W;
+      const s = lerp(1, end, p);
+      const cropX = wide ? ((W - H * aspect) / 2) * p : 0;
+      const cropY = wide ? 0 : ((H - W / aspect) / 2) * p;
       style = {
         transform: `translate(${(box.cx - W / 2) * p}px, ${(box.cy - H / 2) * p}px) scale(${s})`,
-        clipPath: `inset(0 ${sideInset}px round ${lerp(0, 28 / (TILE.w / W), p)}px)`,
+        clipPath: `inset(${cropY}px ${cropX}px round ${lerp(0, 28 / end, p)}px)`,
         opacity: 1 - k(u, SHRINK, SHRINK + 0.4),
       };
       opaque = true;
     }
   } else if (w.bOut !== null && !w.gOut) {
     const q = k(n, fwd(w.bOut) - D / 2, fwd(w.bOut) + D / 2, EASE_IO);
-    if (q > 0) style = leaveStyle(CUT_KIND[w.bOut], q);
+    if (q > 0) style = leaveStyle(L, CUT_KIND[w.bOut], q);
   }
   // entering
   if (w.gIn && n < gapEnd(w.gIn)) {
@@ -115,7 +128,7 @@ const SceneSlot: React.FC<{ i: number; children: React.ReactNode }> = ({ i, chil
   } else if (w.bIn !== null && !w.gIn) {
     const p = k(n, fwd(w.bIn) - D / 2, fwd(w.bIn) + D / 2, EASE_IO);
     if (p < 1) {
-      style = enterStyle(CUT_KIND[w.bIn], p);
+      style = enterStyle(L, CUT_KIND[w.bIn], p);
       opaque = CUT_KIND[w.bIn] === 'arch' || CUT_KIND[w.bIn] === 'push';
     }
   }
@@ -130,6 +143,8 @@ const SceneSlot: React.FC<{ i: number; children: React.ReactNode }> = ({ i, chil
 // Flourishes painted above both scenes during a cut.
 const Overlay: React.FC = () => {
   const t = useCurrentFrame() / FPS;
+  const L = useL();
+  const { W, H } = L;
   return (
     <>
       {CUTS.map(({ t: c, kind }) => {
@@ -160,7 +175,7 @@ const Overlay: React.FC = () => {
           );
         }
         if (kind === 'pattern') {
-          const x = bandX(p);
+          const x = bandX(L, p);
           return (
             <div
               key={c}
@@ -196,25 +211,27 @@ const Overlay: React.FC = () => {
   );
 };
 
-export const Main: React.FC = () => (
-  <AbsoluteFill style={{ overflow: 'hidden' }}>
-    <Backdrop />
-    <Agenda />
-    {SCENES.map((Scene, i) => {
-      const { start, end } = windowOf(i);
-      return (
-        <Sequence key={i} from={Math.round(start * FPS)} durationInFrames={Math.round((end - start) * FPS)}>
-          <SceneStart value={start}>
-            <SceneSlot i={i}>
-              <Scene />
-            </SceneSlot>
-          </SceneStart>
-        </Sequence>
-      );
-    })}
-    <Motes front />
-    <Overlay />
-    <Audio src={staticFile('vo_film.wav')} />
-    <Audio src={staticFile('sfx.wav')} volume={0.55} />
-  </AbsoluteFill>
+export const Main: React.FC<{ vertical?: boolean }> = ({ vertical }) => (
+  <LayoutProvider value={vertical ? VERTICAL : LANDSCAPE}>
+    <AbsoluteFill style={{ overflow: 'hidden' }}>
+      <Backdrop />
+      <Agenda />
+      {SCENES.map((Scene, i) => {
+        const { start, end } = windowOf(i);
+        return (
+          <Sequence key={i} from={Math.round(start * FPS)} durationInFrames={Math.round((end - start) * FPS)}>
+            <SceneStart value={start}>
+              <SceneSlot i={i}>
+                <Scene />
+              </SceneSlot>
+            </SceneStart>
+          </Sequence>
+        );
+      })}
+      <Motes front />
+      <Overlay />
+      {/* voiceover only — the client asked for no sound effects */}
+      <Audio src={staticFile('vo_film.wav')} />
+    </AbsoluteFill>
+  </LayoutProvider>
 );

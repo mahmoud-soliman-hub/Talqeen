@@ -1,6 +1,7 @@
 import React from 'react';
 import { AbsoluteFill, Img, staticFile, useCurrentFrame } from 'remotion';
-import { C, FPS, H, W } from '../theme';
+import { C, FPS } from '../theme';
+import { useL } from '../layout';
 import { EASE, k } from '../lib';
 import { GAPS, fwd } from '../timeline';
 
@@ -19,8 +20,8 @@ const h = (n: number) => {
 
 const makeMotes = (n: number, seed: number) =>
   Array.from({ length: n }, (_, i) => ({
-    x: h(i + seed) * W,
-    y: h(i + seed + 100) * H,
+    x: h(i + seed),
+    y: h(i + seed + 100),
     r: 3 + h(i + seed + 200) * 16,
     sp: 8 + h(i + seed + 300) * 22,
     sw: 10 + h(i + seed + 400) * 30,
@@ -35,14 +36,15 @@ const FRONT_MOTES = makeMotes(14, 900);
 // Floating light motes (gold, teal, green); front layer is larger and sparser.
 export const Motes: React.FC<{ front?: boolean; offset?: number }> = ({ front, offset = 0 }) => {
   const t = offset + useCurrentFrame() / FPS;
+  const { W, H } = useL();
   const cx = camX(t);
   const list = front ? FRONT_MOTES : BACK_MOTES;
   return (
     <AbsoluteFill style={{ pointerEvents: 'none' }}>
       {list.map((m, i) => {
         const r = front ? m.r * 1.8 : m.r;
-        const y = (((m.y - t * m.sp * (front ? 1.6 : 1)) % (H + 120)) + H + 120) % (H + 120) - 60;
-        const x = m.x + Math.sin(t / 3 + m.ph) * m.sw + cx * (front ? 1.4 : 0.3 + r / 30);
+        const y = (((m.y * H - t * m.sp * (front ? 1.6 : 1)) % (H + 120)) + H + 120) % (H + 120) - 60;
+        const x = m.x * W + Math.sin(t / 3 + m.ph) * m.sw + cx * (front ? 1.4 : 0.3 + r / 30);
         const tw = 0.6 + 0.4 * Math.sin(t * 1.3 + m.ph);
         const a = (front ? 0.35 : 1) * m.a * tw;
         return (
@@ -69,6 +71,7 @@ export const Motes: React.FC<{ front?: boolean; offset?: number }> = ({ front, o
 export const Backdrop: React.FC<{ offset?: number }> = ({ offset = 0 }) => {
   const f = useCurrentFrame();
   const t = offset + f / FPS;
+  const { W, H } = useL();
   const cx = camX(t);
   const cy = camY(t);
   const breathe = 1.12 + 0.03 * Math.sin(t / 9);

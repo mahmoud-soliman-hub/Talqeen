@@ -2,19 +2,24 @@ import React from 'react';
 import { AbsoluteFill, Easing, useCurrentFrame } from 'remotion';
 import { Divider } from '../components/Ornaments';
 import { Icon } from '../components/Visual';
-import { C, FPS, H, W } from '../theme';
+import { C, FPS } from '../theme';
+import { Layout, useL } from '../layout';
 import { font, k } from '../lib';
 import { AGENDA, FIRST_GAP, GAPS, gapStart } from '../timeline';
 
-// Card grid: two rows of four, read right-to-left.
-export const TILE = { w: 380, h: 250, gx: 40, gy: 44, top: 340 };
-const left0 = (W - (TILE.w * 4 + TILE.gx * 3)) / 2;
-export const tileBox = (i: number) => {
-  const row = Math.floor(i / 4);
-  const col = i % 4;
-  const x = left0 + (3 - col) * (TILE.w + TILE.gx);
-  const y = TILE.top + row * (TILE.h + TILE.gy);
-  return { x, y, cx: x + TILE.w / 2, cy: y + TILE.h / 2 };
+// Card grid, read right-to-left: 4×2 in landscape, 2×4 in vertical.
+export const tileGrid = (L: Layout) => {
+  const cols = L.V ? 2 : 4;
+  const TILE = L.V ? { w: 440, h: 250, gx: 40, gy: 40, top: 470 } : { w: 380, h: 250, gx: 40, gy: 44, top: 340 };
+  const left0 = (L.W - (TILE.w * cols + TILE.gx * (cols - 1))) / 2;
+  const tileBox = (i: number) => {
+    const row = Math.floor(i / cols);
+    const col = i % cols;
+    const x = left0 + (cols - 1 - col) * (TILE.w + TILE.gx);
+    const y = TILE.top + row * (TILE.h + TILE.gy);
+    return { x, y, cx: x + TILE.w / 2, cy: y + TILE.h / 2 };
+  };
+  return { TILE, tileBox };
 };
 
 const easeIn = Easing.bezier(0.55, 0, 0.75, 0.4);
@@ -27,6 +32,9 @@ const phases = (first: boolean) =>
 
 export const Agenda: React.FC = () => {
   const n = useCurrentFrame() / FPS;
+  const L = useL();
+  const { W, H } = L;
+  const { TILE, tileBox } = tileGrid(L);
   const gi = GAPS.findIndex((g) => n >= gapStart(g) && n < gapStart(g) + g.add);
   if (gi < 0) return null;
   const g = GAPS[gi];
@@ -34,7 +42,7 @@ export const Agenda: React.FC = () => {
   const P = phases(gi === 0);
   const j = g.item;
   const zp = k(u, P.zoom[0], P.zoom[1], easeIn);
-  const z = 1 + 4.6 * zp; // card fills the frame at the end of the dive
+  const z = 1 + (L.V ? 3.2 : 4.6) * zp; // card fills the frame at the end of the dive
   const target = tileBox(j);
   const layer = k(u, P.in[0], P.in[1]);
   return (
@@ -45,7 +53,7 @@ export const Agenda: React.FC = () => {
           transform: `translate(${(W / 2 - target.cx) * zp}px, ${(H / 2 - target.cy) * zp}px) scale(${z})`,
         }}
       >
-        <div style={{ position: 'absolute', top: 120, left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ position: 'absolute', top: L.V ? 230 : 120, left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <p
             style={{
               ...font(78, 700, C.ink),

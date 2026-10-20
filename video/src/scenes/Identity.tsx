@@ -6,6 +6,7 @@ import { Diamond, Icon, Photo } from '../components/Visual';
 import { C } from '../theme';
 import { MEDIA } from '../media';
 import { font, k, kashida, useT } from '../lib';
+import { useL } from '../layout';
 
 // 0:40 — governance, measurement and quality.
 export const Governance: React.FC = () => {
@@ -15,9 +16,10 @@ export const Governance: React.FC = () => {
     { at: 43.0, label: 'مؤشرات الأداء', icon: 'chart', r: 0.92 },
     { at: 46.4, label: 'معايير الجودة', icon: 'badge', r: 1 },
   ];
+  const { V } = useL();
   return (
     <AbsoluteFill>
-      <div style={{ position: 'absolute', left: 150, top: 300, display: 'flex', gap: 54, direction: 'rtl' }}>
+      <div style={{ position: 'absolute', left: V ? 86 : 150, top: V ? 420 : 300, display: 'flex', gap: V ? 34 : 54, direction: 'rtl' }}>
         {rings.map(({ at, label, icon, r }, i) => {
           const p = k(t, at, at + 1.6);
           const R = 118;
@@ -54,7 +56,7 @@ export const Governance: React.FC = () => {
           );
         })}
       </div>
-      <div style={{ position: 'absolute', right: 150, top: 250, width: 760, textAlign: 'right' }}>
+      <div style={{ position: 'absolute', right: V ? 80 : 150, top: V ? 1000 : 250, width: V ? 920 : 760, textAlign: 'right' }}>
         <Label at={40.3}>منهجية العمل</Label>
         <div style={{ height: 18 }} />
         <Words
@@ -77,11 +79,22 @@ export const Governance: React.FC = () => {
 };
 
 // 0:51 — vision.
-export const Vision: React.FC = () => (
+export const Vision: React.FC = () => {
+  const { V } = useL();
+  return (
   <AbsoluteFill>
-    <Photo src={MEDIA["s03-vision"]} w={560} h={800} at={50.5} span={12.5} shape="arch" pos="62% 50%" style={{ position: 'absolute', left: 190, top: 150 }} />
-    <div style={{ position: 'absolute', right: 170, top: 210, width: 920 }}>
-      <Title text="الرؤية" at={51.55} size={160} />
+    <Photo
+      src={MEDIA["s03-vision"]}
+      w={560}
+      h={V ? 720 : 800}
+      at={50.5}
+      span={12.5}
+      shape="arch"
+      pos="62% 50%"
+      style={{ position: 'absolute', left: V ? 260 : 190, top: V ? 170 : 150 }}
+    />
+    <div style={{ position: 'absolute', right: V ? 80 : 170, top: V ? 950 : 210, width: V ? 920 : 920 }}>
+      <Title text="الرؤية" at={51.55} size={V ? 140 : 160} />
       <div style={{ height: 40 }} />
       <Words
         segs={[
@@ -90,13 +103,14 @@ export const Vision: React.FC = () => (
           { s: 57.82, e: 59.09, text: 'وتلاوةً وحفظًا' },
           { s: 59.45, e: 62.64, text: 'وفق أعلى معايير الضبط والجودة الإقرائية.' },
         ]}
-        size={54}
+        size={V ? 52 : 54}
         hot={['الريادة', 'أداءً', 'وإتقانًا', 'وتلاوةً', 'وحفظًا']}
         style={{ textAlign: 'right' }}
       />
     </div>
   </AbsoluteFill>
-);
+  );
+};
 
 // 1:03 — mission, four pillars.
 export const Mission: React.FC = () => {
@@ -107,15 +121,29 @@ export const Mission: React.FC = () => {
     { at: 73.87, icon: 'shield', title: 'ضبط التلاوة', sub: 'وترسيخ أحكام الإتقان' },
     { at: 77.28, icon: 'tablet', title: 'تقنيات حديثة', sub: 'وأساليب تربوية جاذبة' },
   ];
+  const { V } = useL();
   return (
     <AbsoluteFill>
-      <div style={{ position: 'absolute', right: 160, top: 110, width: 1600, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', direction: 'rtl' }}>
+      <div
+        style={{
+          position: 'absolute',
+          right: V ? 80 : 160,
+          top: V ? 200 : 110,
+          width: V ? 920 : 1600,
+          display: 'flex',
+          flexDirection: V ? 'column' : 'row',
+          justifyContent: 'space-between',
+          alignItems: V ? 'flex-start' : 'flex-end',
+          gap: V ? 30 : 0,
+          direction: 'rtl',
+        }}
+      >
         <Title text="الرسالة" at={63.4} size={140} />
-        <div style={{ width: 860, textAlign: 'left', paddingBottom: 26 }}>
+        <div style={{ width: V ? 920 : 860, textAlign: V ? 'right' : 'left', paddingBottom: 26 }}>
           <Words segs={[{ s: 65.07, e: 68.36, text: 'تقديم بيئة تعليمية قرآنية نموذجية' }]} size={56} weight={700} hot={['نموذجية']} />
         </div>
       </div>
-      <div style={{ position: 'absolute', left: 160, right: 160, top: 470, display: 'flex', gap: 36, direction: 'rtl' }}>
+      <div style={{ position: 'absolute', left: V ? 80 : 160, right: V ? 80 : 160, top: V ? 700 : 470, display: V ? 'grid' : 'flex', gridTemplateColumns: '1fr 1fr', gap: 36, direction: 'rtl' }}>
         {cards.map((c, i) => {
           const p = k(t, c.at, c.at + 0.9);
           return (
@@ -123,7 +151,7 @@ export const Mission: React.FC = () => {
               key={c.title}
               style={{
                 flex: 1,
-                height: 470,
+                height: V ? 480 : 470,
                 borderRadius: 30,
                 background: '#FFFFFF',
                 boxShadow: '0 30px 60px -36px rgba(30,70,80,0.45)',
@@ -159,16 +187,17 @@ export const Values: React.FC = () => {
     { at: 86.41, w: 'التمكين', icon: 'growth' },
     { at: 88.0, w: 'الاستدامة', icon: 'leaf' },
   ];
-  const W = 380;
-  const H = 520;
+  const { V } = useL();
+  const W = V ? 300 : 380;
+  const H = V ? 440 : 520;
   const d = archPath(W, H);
   const perim = W * 2 + H * 2.2;
   return (
     <AbsoluteFill style={{ alignItems: 'center' }}>
-      <div style={{ marginTop: 90 }}>
+      <div style={{ marginTop: V ? 560 : 90 }}>
         <Title text="القيم" at={82.97} size={130} align="center" />
       </div>
-      <div style={{ display: 'flex', gap: 90, marginTop: 50, direction: 'rtl' }}>
+      <div style={{ display: 'flex', gap: V ? 28 : 90, marginTop: V ? 90 : 50, direction: 'rtl' }}>
         {vals.map(({ at, w, icon }, i) => {
           const p = k(t, at, at + 1.2);
           return (
@@ -184,10 +213,10 @@ export const Values: React.FC = () => {
                 <path d={d} fill="none" stroke={C.gold} strokeWidth={2} strokeDasharray={perim} strokeDashoffset={perim * (1 - p)} />
               </svg>
               <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingTop: 70 }}>
-                <Icon name={icon} at={at + 0.3} size={96} color={i % 2 ? C.greenDeep : C.tealDeep} />
+                <Icon name={icon} at={at + 0.3} size={V ? 78 : 96} color={i % 2 ? C.greenDeep : C.tealDeep} />
                 <div style={{ height: 36 }} />
                 <Wipe at={at + 0.25} dur={0.9}>
-                  <p style={font(66, 700, C.ink)}>{kashida(w, 2)}</p>
+                  <p style={font(V ? 50 : 66, 700, C.ink)}>{kashida(w, 2)}</p>
                 </Wipe>
                 <Diamond size={14} fill={C.green} style={{ marginTop: 26, opacity: p }} />
               </div>

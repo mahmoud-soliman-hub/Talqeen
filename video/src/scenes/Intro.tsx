@@ -6,10 +6,12 @@ import { Diamond, Icon, Media, Photo } from '../components/Visual';
 import { C } from '../theme';
 import { MEDIA } from '../media';
 import { font, k, useT, win } from '../lib';
+import { useL } from '../layout';
 
 // 0:00 — logo assembles, then the slogan.
 export const Opening: React.FC = () => {
   const t = useT();
+  const { V } = useL();
   const mark = k(t, 0.35, 1.6);
   const name = k(t, 1.3, 2.4);
   const tag = k(t, 2.1, 3.1);
@@ -25,7 +27,7 @@ export const Opening: React.FC = () => {
           borderRadius: '50%',
           background: 'radial-gradient(circle, rgba(255,251,240,1) 0%, rgba(255,251,240,0) 65%)',
           opacity: glow,
-          top: 40,
+          top: V ? 460 : 40,
         }}
       />
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', transform: `translateY(${-70 * lift}px) scale(${1 - 0.12 * lift})` }}>
@@ -53,7 +55,7 @@ export const Opening: React.FC = () => {
           <div style={{ width: 46, height: 2, background: C.green }} />
         </div>
       </div>
-      <div style={{ position: 'absolute', top: 790, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div style={{ position: 'absolute', top: V ? 1230 : 790, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Divider width={640} progress={k(t, 4.5, 5.6)} />
         <div style={{ height: 22, opacity: 0 }} />
         <Words
@@ -81,6 +83,8 @@ export const Opening: React.FC = () => {
 // 0:08 — why Talqeen exists.
 export const Founding: React.FC = () => {
   const t = useT();
+  const { V } = useL();
+  const TW = V ? 900 : 920;
   const a = win(t, 8.2, 15.3, 0.5);
   const b = k(t, 15.2, 15.9);
   const chain = [
@@ -90,14 +94,23 @@ export const Founding: React.FC = () => {
   ];
   return (
     <AbsoluteFill>
-      <Photo src={MEDIA["s01-founding"]} w={600} h={820} at={7.85} span={17} shape="arch" pos="50% 60%" style={{ position: 'absolute', left: 170, top: 150 }} />
-      <div style={{ position: 'absolute', right: 170, top: 200, width: 920, textAlign: 'right' }}>
+      <Photo
+        src={MEDIA["s01-founding"]}
+        w={V ? 560 : 600}
+        h={V ? 740 : 820}
+        at={7.85}
+        span={17}
+        shape="arch"
+        pos="50% 60%"
+        style={{ position: 'absolute', left: V ? 260 : 170, top: V ? 170 : 150 }}
+      />
+      <div style={{ position: 'absolute', right: V ? 90 : 170, top: V ? 990 : 200, width: TW, textAlign: 'right' }}>
         <Label at={8.4}>عن الجمعية</Label>
         <div style={{ position: 'relative', marginTop: 20 }}>
-          <div style={{ opacity: a, position: 'absolute', right: 0, width: 920 }}>
+          <div style={{ opacity: a, position: 'absolute', right: 0, width: TW }}>
             <Words
               segs={[{ s: 8.49, e: 13.42, text: 'تأسست لمعالجة فجوات الأداء والإتقان القرآني' }]}
-              size={74}
+              size={V ? 66 : 74}
               weight={700}
               hot={['الأداء', 'والإتقان']}
               lineHeight={1.4}
@@ -127,7 +140,7 @@ export const Founding: React.FC = () => {
               })}
             </div>
           </div>
-          <div style={{ opacity: b, position: 'absolute', right: 0, width: 920 }}>
+          <div style={{ opacity: b, position: 'absolute', right: 0, width: TW }}>
             <Words
               segs={[{ s: 15.38, e: 18.36, text: 'واحتواء الخاتمين في مرحلة ما بعد الإتمام' }]}
               size={56}
@@ -175,25 +188,28 @@ export const Aims: React.FC = () => {
     { at: 37.46, icon: 'book', text: 'مناهج علمية محكمة' },
   ];
   const img = k(t, 24.9, 26.4);
+  const { V } = useL();
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ opacity: img }}>
         <Media
           src={MEDIA['s02-aims']}
-          pos="50% 60%"
-          style={{ transform: `scale(${1.12 - 0.08 * k(t, 24.9, 40.3, (x) => x)}) translateX(${-30 * k(t, 24.9, 40.3, (x) => x)}px)` }}
+          pos={V ? '30% 50%' : '50% 60%'}
+          style={{ ...(V ? { height: '62%' } : {}), transform: `scale(${1.12 - 0.08 * k(t, 24.9, 40.3, (x) => x)}) translateX(${-30 * k(t, 24.9, 40.3, (x) => x)}px)` }}
         />
         <AbsoluteFill
           style={{
-            background: `linear-gradient(270deg, ${C.bg} 0%, rgba(250,248,243,0.96) 38%, rgba(250,248,243,0.55) 62%, rgba(250,248,243,0.1) 100%)`,
+            background: V
+              ? `linear-gradient(0deg, ${C.bg} 0%, rgba(250,248,243,0.97) 44%, rgba(250,248,243,0.4) 58%, rgba(250,248,243,0.05) 75%)`
+              : `linear-gradient(270deg, ${C.bg} 0%, rgba(250,248,243,0.96) 38%, rgba(250,248,243,0.55) 62%, rgba(250,248,243,0.1) 100%)`,
           }}
         />
         <AbsoluteFill style={{ background: `linear-gradient(0deg, ${C.bg} 0%, rgba(250,248,243,0) 30%)` }} />
       </AbsoluteFill>
-      <div style={{ position: 'absolute', right: 150, top: 150, width: 1000, textAlign: 'right' }}>
+      <div style={{ position: 'absolute', right: V ? 80 : 150, top: V ? 1030 : 150, width: V ? 920 : 1000, textAlign: 'right' }}>
         <Label at={25.4}>رسالتنا في الميدان</Label>
         <div style={{ height: 16 }} />
-        <Words segs={[{ s: 25.52, e: 28.6, text: 'صناعة نخبة من المتقنين' }]} size={86} weight={700} hot={['المتقنين']} lineHeight={1.3} />
+        <Words segs={[{ s: 25.52, e: 28.6, text: 'صناعة نخبة من المتقنين' }]} size={V ? 76 : 86} weight={700} hot={['المتقنين']} lineHeight={1.3} />
         <Words segs={[{ s: 28.6, e: 31.09, text: 'وتأهيل كفاءات تعليمية جادة' }]} size={54} color={C.inkSoft} style={{ marginTop: 10 }} />
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '34px 40px', marginTop: 60, direction: 'rtl' }}>
           {feats.map(({ at, icon, text }, i) => {

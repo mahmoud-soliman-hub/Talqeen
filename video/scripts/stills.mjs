@@ -9,7 +9,7 @@ const [dir, ...times] = process.argv.slice(2);
 const chrome = process.env.REMOTION_CHROME || '/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell';
 fs.mkdirSync(dir, { recursive: true });
 const serveUrl = await bundle({ entryPoint: path.resolve('src/index.ts') });
-const composition = await selectComposition({ serveUrl, id: 'Talqeen', browserExecutable: chrome });
+const composition = await selectComposition({ serveUrl, id: process.env.COMP || 'Talqeen', browserExecutable: chrome });
 const files = [];
 for (const s of times) {
   const out = path.join(dir, `t${String(s).padStart(6, '0')}.png`);
