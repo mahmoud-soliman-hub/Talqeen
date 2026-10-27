@@ -1,0 +1,142 @@
+{
+ "horizontal-color": [
+  1149.2130979914791,
+  400
+ ],
+ "horizontal-ar-color": [
+  1149.2130979914791,
+  400
+ ],
+ "vertical-color": [
+  869.6670967741936,
+  931.3389143360756
+ ],
+ "signature-color": [
+  1651.7023396226414,
+  300
+ ],
+ "mark-color": [
+  430.188679245283,
+  600
+ ],
+ "wordmark-ar-color": [
+  756.2322580645163,
+  250.00000000000003
+ ],
+ "wordmark-en-color": [
+  908.4600000000002,
+  101.36000000000001
+ ],
+ "horizontal-reverse-teal": [
+  1149.2130979914791,
+  400
+ ],
+ "horizontal-ar-reverse-teal": [
+  1149.2130979914791,
+  400
+ ],
+ "vertical-reverse-teal": [
+  869.6670967741936,
+  931.3389143360756
+ ],
+ "signature-reverse-teal": [
+  1651.7023396226414,
+  300
+ ],
+ "mark-reverse-teal": [
+  430.188679245283,
+  600
+ ],
+ "wordmark-ar-reverse-teal": [
+  756.2322580645163,
+  250.00000000000003
+ ],
+ "wordmark-en-reverse-teal": [
+  908.4600000000002,
+  101.36000000000001
+ ],
+ "horizontal-reverse-deep": [
+  1149.2130979914791,
+  400
+ ],
+ "horizontal-ar-reverse-deep": [
+  1149.2130979914791,
+  400
+ ],
+ "vertical-reverse-deep": [
+  869.6670967741936,
+  931.3389143360756
+ ],
+ "signature-reverse-deep": [
+  1651.7023396226414,
+  300
+ ],
+ "mark-reverse-deep": [
+  430.188679245283,
+  600
+ ],
+ "wordmark-ar-reverse-deep": [
+  756.2322580645163,
+  250.00000000000003
+ ],
+ "wordmark-en-reverse-deep": [
+  908.4600000000002,
+  101.36000000000001
+ ],
+ "horizontal-mono-ink": [
+  1149.2130979914791,
+  400
+ ],
+ "horizontal-ar-mono-ink": [
+  1149.2130979914791,
+  400
+ ],
+ "vertical-mono-ink": [
+  869.6670967741936,
+  931.3389143360756
+ ],
+ "signature-mono-ink": [
+  1651.7023396226414,
+  300
+ ],
+ "mark-mono-ink": [
+  430.188679245283,
+  600
+ ],
+ "wordmark-ar-mono-ink": [
+  756.2322580645163,
+  250.00000000000003
+ ],
+ "wordmark-en-mono-ink": [
+  908.4600000000002,
+  101.36000000000001
+ ],
+ "horizontal-mono-white": [
+  1149.2130979914791,
+  400
+ ],
+ "horizontal-ar-mono-white": [
+  1149.2130979914791,
+  400
+ ],
+ "vertical-mono-white": [
+  869.6670967741936,
+  931.3389143360756
+ ],
+ "signature-mono-white": [
+  1651.7023396226414,
+  300
+ ],
+ "mark-mono-white": [
+  430.188679245283,
+  600
+ ],
+ "wordmark-ar-mono-white": [
+  756.2322580645163,
+  250.00000000000003
+ ],
+ "wordmark-en-mono-white": [
+  908.4600000000002,
+  101.36000000000001
+ ]
+}
