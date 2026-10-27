@@ -30,7 +30,7 @@ const phases = (first: boolean) =>
     ? { in: [0.2, 1.0], tiles: 1.0, stagger: 0.32, mark: [9, 9], hi: [4.5, 5.1], zoom: [5.75, FIRST_GAP - 0.35] }
     : { in: [0.0, 0.6], tiles: -1, stagger: 0, mark: [0.8, 1.25], hi: [1.0, 1.5], zoom: [1.5, 2.65] };
 
-// Brand lockup heading the agenda: logo mark on the left, the association's full name to its right.
+// Brand lockup heading the agenda: logo mark on the right, the association's full name to its left.
 const Lockup: React.FC<{ u: number; first: boolean; fade: number }> = ({ u, first, fade }) => {
   const { V } = useL();
   const logo = first ? k(u, 0.25, 1.1) : 1;
@@ -52,7 +52,7 @@ const Lockup: React.FC<{ u: number; first: boolean; fade: number }> = ({ u, firs
         transform: first ? undefined : `translateY(${(1 - fade) * 24}px)`,
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', direction: 'ltr' }}>
+      <div style={{ display: 'flex', alignItems: 'center', direction: 'rtl' }}>
         <Img
           src={staticFile('brand/logo-mark.png')}
           style={{
