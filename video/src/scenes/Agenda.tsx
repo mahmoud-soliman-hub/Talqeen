@@ -1,5 +1,5 @@
 import React from 'react';
-import { AbsoluteFill, Easing, useCurrentFrame } from 'remotion';
+import { AbsoluteFill, Easing, Img, staticFile, useCurrentFrame } from 'remotion';
 import { Divider } from '../components/Ornaments';
 import { Icon } from '../components/Visual';
 import { C, FPS } from '../theme';
@@ -30,6 +30,64 @@ const phases = (first: boolean) =>
     ? { in: [0.2, 1.0], tiles: 1.0, stagger: 0.32, mark: [9, 9], hi: [4.5, 5.1], zoom: [5.75, FIRST_GAP - 0.35] }
     : { in: [0.0, 0.6], tiles: -1, stagger: 0, mark: [0.8, 1.25], hi: [1.0, 1.5], zoom: [1.5, 2.65] };
 
+// Brand lockup heading the agenda: logo mark on the left, the association's full name to its right.
+const Lockup: React.FC<{ u: number; first: boolean; fade: number }> = ({ u, first, fade }) => {
+  const { V } = useL();
+  const logo = first ? k(u, 0.25, 1.1) : 1;
+  const rule = first ? k(u, 0.6, 1.2) : 1;
+  const text = first ? k(u, 0.8, 1.7) : 1;
+  const orn = first ? k(u, 1.2, 2.0) : 1;
+  const LH = V ? 124 : 140;
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        top: V ? 210 : 92,
+        left: 0,
+        right: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        opacity: first ? 1 : fade,
+        transform: first ? undefined : `translateY(${(1 - fade) * 24}px)`,
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', direction: 'ltr' }}>
+        <Img
+          src={staticFile('brand/logo-mark.png')}
+          style={{
+            height: LH,
+            clipPath: `inset(${(1 - logo) * 100}% 0 0 0)`,
+            transform: `translateY(${(1 - logo) * 30}px)`,
+          }}
+        />
+        <div
+          style={{
+            width: 2,
+            height: LH * 0.78,
+            margin: `0 ${V ? 26 : 34}px`,
+            background: `linear-gradient(${C.green}, ${C.teal})`,
+            transform: `scaleY(${rule})`,
+          }}
+        />
+        <div
+          style={{
+            direction: 'rtl',
+            textAlign: 'right',
+            clipPath: `inset(-20% 0 -20% ${(1 - text) * 100}%)`,
+            transform: `translateY(${(1 - text) * 14}px)`,
+          }}
+        >
+          <p style={{ ...font(V ? 48 : 56, 700, C.ink), lineHeight: 1.3, whiteSpace: 'nowrap' }}>جمعية تلقين لتعليم القرآن الكريم</p>
+          <p style={{ ...font(V ? 38 : 42, 700, C.tealDeep), lineHeight: 1.3, whiteSpace: 'nowrap' }}>بمنطقة تبوك</p>
+        </div>
+      </div>
+      <div style={{ height: 16 }} />
+      <Divider width={V ? 460 : 520} progress={orn} />
+    </div>
+  );
+};
+
 export const Agenda: React.FC = () => {
   const n = useCurrentFrame() / FPS;
   const L = useL();
@@ -53,19 +111,7 @@ export const Agenda: React.FC = () => {
           transform: `translate(${(W / 2 - target.cx) * zp}px, ${(H / 2 - target.cy) * zp}px) scale(${z})`,
         }}
       >
-        <div style={{ position: 'absolute', top: L.V ? 230 : 120, left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <p
-            style={{
-              ...font(78, 700, C.ink),
-              opacity: k(u, P.in[0] + 0.2, P.in[1] + 0.4),
-              transform: `translateY(${(1 - k(u, P.in[0] + 0.2, P.in[1] + 0.4)) * 24}px)`,
-            }}
-          >
-            محاور الفيلم
-          </p>
-          <div style={{ height: 14 }} />
-          <Divider width={520} progress={gi === 0 ? k(u, 0.6, 1.6) : 1} />
-        </div>
+        <Lockup u={u} first={gi === 0} fade={k(u, P.in[0] + 0.2, P.in[1] + 0.4)} />
         {AGENDA.map((a, i) => {
           const box = tileBox(i);
           const appear = P.tiles < 0 ? 1 : k(u, P.tiles + i * P.stagger, P.tiles + 0.6 + i * P.stagger);
