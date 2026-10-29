@@ -11,6 +11,7 @@
 | `logo/svg/` | كل الشعارات متجهة (النصوص محوّلة لمسارات) | للطباعة والتكبير بلا حدود — الملف الأساسي |
 | `logo/png/` | نفس الشعارات PNG بخلفية شفافة (2400px) | للعروض والسوشيال والوورد |
 | `logo/icons/` | أيقونة التطبيق، صورة البروفايل، أيقونة الموقع | للحسابات والمواقع |
+| `proposals/font-options/` | اقتراحات الخط العربي للشعار (12 خطًا) — PDF وصورة مقارنة | لاعتماد العميل قبل تحديث الهوية |
 
 ## تسمية ملفات الشعار
 
@@ -43,6 +44,10 @@ python3 build_book.py        # يبني صفحات الدليل HTML
 node render.js pdf ../brandbook/SHARE-ART-Brand-Guidelines.pdf
 node render.js png           # صور الصفحات للمراجعة
 node export_png.js           # PNG الشعارات والأيقونات
+
+# اقتراحات الخط العربي
+python3 font_options.py && python3 build_options.py
+SRC=font-options.html node render.js pdf ../proposals/font-options/SHARE-ART-Arabic-Font-Options.pdf
 ```
 
 الألوان في `build/palette.json`، وأي تعديل فيها ينعكس على كل الملفات بعد إعادة التوليد.
