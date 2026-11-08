@@ -24,16 +24,19 @@ def render(cid, kind, variant):
 
 # ------------------------------------------------------------- logo files
 FILES = []
-for cid in CONCEPTS:
-    kinds = ("horizontal", "stacked", "icon") + (("mini",) if cid == "heritage" else ())
-    for kind in kinds:
-        for variant in ("color", "white", "black"):
-            inner, w, h = render(cid, kind, variant)
-            pad = 24 if kind not in ("icon", "mini") else 12
-            bg = CONCEPTS[cid]["P"]["white"]["bg"] if variant == "white" else None
-            name = f"mr-boma-{cid}-{kind}-{variant}.svg"
-            (LOGOS / name).write_text(svg(inner, w, h, pad=pad, bg=bg))
-            FILES.append(name)
+
+
+def write_logos():
+    for cid in CONCEPTS:
+        kinds = ("horizontal", "stacked", "icon") + (("mini",) if cid == "heritage" else ())
+        for kind in kinds:
+            for variant in ("color", "white", "black"):
+                inner, w, h = render(cid, kind, variant)
+                pad = 24 if kind not in ("icon", "mini") else 12
+                bg = CONCEPTS[cid]["P"]["white"]["bg"] if variant == "white" else None
+                name = f"mr-boma-{cid}-{kind}-{variant}.svg"
+                (LOGOS / name).write_text(svg(inner, w, h, pad=pad, bg=bg))
+                FILES.append(name)
 
 
 def inline(cid, kind, variant, cls="", style=""):
@@ -42,7 +45,7 @@ def inline(cid, kind, variant, cls="", style=""):
 
 
 def data_uri(svgtext):
-    return "url(\"data:image/svg+xml," + quote(svgtext) + "\")"
+    return "url('data:image/svg+xml," + quote(svgtext, safe="") + "')"
 
 
 # ------------------------------------------------------------- patterns
@@ -235,5 +238,7 @@ page = f'''<title>Mr. Boma Logo Concepts</title>
 </section>
 </div>
 '''
-(ROOT / "logo-concepts-v2.html").write_text(page)
-print("logos:", len(FILES), "page bytes:", len(page))
+if __name__ == "__main__":
+    write_logos()
+    (ROOT / "logo-concepts-v2.html").write_text(page)
+    print("logos:", len(FILES), "page bytes:", len(page))
