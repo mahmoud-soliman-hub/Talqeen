@@ -32,14 +32,16 @@ body{font-family:T}
 .stack{position:absolute;left:var(--cx);transform:translateX(-50%);width:470px;
   display:flex;flex-direction:column;align-items:center;text-align:center}
 
-.foil{background:linear-gradient(172deg,#6c4a1a 0%,#a77b37 20%,#e6cd8e 38%,#b48944 54%,#7a5625 70%,#c9a25c 86%,#86602c 100%);
+.foil{background:linear-gradient(172deg,#5a3c10 0%,#86601f 24%,#b78a40 44%,#9c712d 60%,#6d4b18 80%,#8d6626 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 1.5px 0 rgba(255,255,255,.7)) drop-shadow(0 3px 6px rgba(110,78,30,.22))}
+  filter:drop-shadow(0 1.5px 0 rgba(255,255,255,.65)) drop-shadow(0 4px 7px rgba(80,55,20,.28))}
 .navy{background:linear-gradient(175deg,#6f8fb0 0%,#4c6c8c 32%,#33506d 70%,#46668a 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
   filter:drop-shadow(0 2px 0 rgba(255,255,255,.65)) drop-shadow(0 8px 12px rgba(51,80,109,.18))}
 
-.hero-gold{font-weight:900;font-size:122px;line-height:1.22;white-space:nowrap}
+.hero-gold{font-weight:900;font-size:140px;line-height:1.22;white-space:nowrap}
+/* gradient text is only painted inside the box: pad it so descenders (the heh of فهد) are never clipped */
+.foil,.navy{padding:.15em .12em .32em;margin-bottom:-.32em}
 .lead{font-weight:500;font-size:38px;line-height:1.4;color:var(--slate);white-space:nowrap}
 .lead-soft{font-weight:300;font-size:34px;line-height:1.4;color:var(--slate);white-space:nowrap}
 .sub{font-weight:400;font-size:35px;line-height:1.45;color:var(--ink);white-space:nowrap}
@@ -70,25 +72,9 @@ body.alt .v2{display:flex}
       </linearGradient>
       <linearGradient id="fadeR" x1="0" x2="1"><stop offset="0" stop-color="#a77b37" stop-opacity="0"/><stop offset="1" stop-color="#a77b37"/></linearGradient>
       <linearGradient id="fadeL" x1="1" x2="0"><stop offset="0" stop-color="#a77b37" stop-opacity="0"/><stop offset="1" stop-color="#a77b37"/></linearGradient>
-      <symbol id="star" viewBox="-50 -50 100 100">
-        <g fill="none" stroke="url(#g)" stroke-width="3.2">
-          <rect x="-30" y="-30" width="60" height="60"/>
-          <rect x="-30" y="-30" width="60" height="60" transform="rotate(45)"/>
-        </g>
-        <circle r="13" fill="none" stroke="url(#g)" stroke-width="2.4"/>
-        <circle r="5" fill="url(#g)"/>
-      </symbol>
-      <symbol id="ornTop" viewBox="0 0 250 56">
-        <line x1="8" y1="28" x2="90" y2="28" stroke="url(#fadeR)" stroke-width="1.6"/>
-        <line x1="160" y1="28" x2="242" y2="28" stroke="url(#fadeL)" stroke-width="1.6"/>
-        <circle cx="96" cy="28" r="2.6" fill="#a77b37"/><circle cx="154" cy="28" r="2.6" fill="#a77b37"/>
-        <use href="#star" x="99" y="3" width="52" height="50"/>
-      </symbol>
-      <symbol id="ornMid" viewBox="0 0 240 40">
-        <line x1="8" y1="20" x2="94" y2="20" stroke="url(#fadeR)" stroke-width="1.4"/>
-        <line x1="146" y1="20" x2="232" y2="20" stroke="url(#fadeL)" stroke-width="1.4"/>
-        <use href="#star" x="102" y="2" width="36" height="36"/>
-      </symbol>
+      
+      
+      
       <symbol id="ornDot" viewBox="0 0 170 16">
         <line x1="0" y1="8" x2="70" y2="8" stroke="url(#fadeR)" stroke-width="1.4"/>
         <line x1="100" y1="8" x2="170" y2="8" stroke="url(#fadeL)" stroke-width="1.4"/>
@@ -98,29 +84,28 @@ body.alt .v2{display:flex}
   </svg>
 
   <!-- ===== VARIANT 1 : congratulation from Mahmoud (default) ===== -->
-  <div class="stack v1" style="top:268px">
-    <svg width="230" height="52"><use href="#ornTop"/></svg>
-    <div class="hero-gold foil" style="margin-top:8px">مبـارك</div>
-    <div class="lead" style="margin-top:10px">أخي الغالي عبدالعزيز</div>
+  <div class="stack v1" style="top:272px">
+    <div class="hero-gold foil" style="margin-top:-.15em">مبارك</div>
+    <div class="lead" style="margin-top:6px">أخي الغالي عبدالعزيز</div>
     <div class="lead-soft" style="margin-top:2px">قدوم مولودك</div>
-    <div class="name navy" style="margin-top:14px">فهـــد</div>
-    <svg width="220" height="37" style="margin-top:18px"><use href="#ornMid"/></svg>
-    <div class="dua" style="margin-top:22px;font-size:31px">بُورك لك في الموهوب، وشكرتَ الواهب<br>وبلغ أشُدَّه، ورُزقتَ بِرَّه</div>
-    <div class="from" style="margin-top:56px">أخوك</div>
+    <div class="name navy" style="margin-top:calc(10px - .15em)">فهـــد</div>
+    <div class="father" style="margin-top:2px"><span class="rule l"></span><span class="dot"></span>بن عبدالعزيز<span class="dot"></span><span class="rule"></span></div>
+    <svg width="170" height="16" style="margin-top:32px"><use href="#ornDot"/></svg>
+    <div class="dua" style="margin-top:24px;font-size:31px">بُورك لك في الموهوب، وشكرتَ الواهب<br>وبلغ أشُدَّه، ورُزقتَ بِرَّه</div>
+    <div class="from" style="margin-top:50px">أخوك</div>
     <div class="sender" style="margin-top:4px"><span class="rule l"></span><span class="dot"></span>محمود سليمان<span class="dot"></span><span class="rule"></span></div>
   </div>
 
   <!-- ===== VARIANT 2 : announcement (original content) ===== -->
-  <div class="stack v2" style="top:270px">
-    <svg width="230" height="52"><use href="#ornTop"/></svg>
-    <div class="hero-gold foil" style="margin-top:4px;font-size:104px">الحمد لله</div>
-    <div class="sub">الذي بنعمته تتم الصالحات</div>
-    <svg width="170" height="16" style="margin-top:14px"><use href="#ornDot"/></svg>
+  <div class="stack v2" style="top:286px">
+    <div class="hero-gold foil" style="margin-top:-.15em;font-size:116px">الحمد لله</div>
+    <div class="sub" style="margin-top:2px">الذي بنعمته تتم الصالحات</div>
+    <svg width="170" height="16" style="margin-top:16px"><use href="#ornDot"/></svg>
     <div class="lead-soft" style="margin-top:10px">رزقنا الله بمولودنا</div>
-    <div class="name navy" style="margin-top:2px">فهـــد</div>
-    <div class="father"><span class="rule l"></span><span class="dot"></span>بن عبدالعزيز<span class="dot"></span><span class="rule"></span></div>
-    <svg width="220" height="37" style="margin-top:24px"><use href="#ornMid"/></svg>
-    <div class="dua" style="margin-top:14px;font-size:32px;line-height:1.66">اللهم أنبته نباتاً حسناً<br>واجعله قرّة عينٍ لنا<br>واجعله من الصالحين<br>واحفظه بعينك التي لا تنام</div>
+    <div class="name navy" style="margin-top:calc(2px - .15em)">فهـــد</div>
+    <div class="father" style="margin-top:2px"><span class="rule l"></span><span class="dot"></span>بن عبدالعزيز<span class="dot"></span><span class="rule"></span></div>
+    <svg width="170" height="16" style="margin-top:30px"><use href="#ornDot"/></svg>
+    <div class="dua" style="margin-top:20px;font-size:32px;line-height:1.66">اللهم أنبته نباتاً حسناً<br>واجعله قرّة عينٍ لنا<br>واجعله من الصالحين<br>واحفظه بعينك التي لا تنام</div>
   </div>
 
   <div class="vignette"></div>
