@@ -1,0 +1,311 @@
+<title>مقترحات شعار مستر بوما</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;600;700&family=Sora:wght@600;700&family=Baloo+Bhaijaan+2:wght@600;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Tajawal:wght@400;500;700&display=swap">
+<style>
+/* Layout: عمود واحد للقراءة، كل مقترح لوحة عرض فيها مساحات للشعار على الفاتح والغامق والمقاسات الصغيرة */
+:root{
+  --bg:#F4F6F8; --surface:#FFFFFF; --fg:#16202B; --muted:#5A6573; --line:#DFE4EA; --accent:#1F6FB2; --chip:#EAF0F6;
+  --f-body:"Tajawal","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --f-head:"Readex Pro","Tajawal",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F151C; --surface:#18212B; --fg:#E8EDF2; --muted:#9AA6B3; --line:#2A3540; --accent:#6FB0E8; --chip:#212C37; color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F151C; --surface:#18212B; --fg:#E8EDF2; --muted:#9AA6B3; --line:#2A3540; --accent:#6FB0E8; --chip:#212C37; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.7;direction:rtl;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 64px}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:48px}
+h1,h2,h3{font-family:var(--f-head);text-wrap:balance;margin:0;line-height:1.3}
+h1{font-size:clamp(28px,4.4vw,40px)}
+h2{font-size:clamp(22px,3vw,28px)}
+h3{font-size:17px}
+p{margin:0}
+.eyebrow{font-size:13px;letter-spacing:.04em;color:var(--muted);font-weight:500}
+.lead{color:var(--muted);max-width:65ch}
+
+header{display:flex;flex-direction:column;gap:12px}
+
+.audit{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.audit h3{grid-column:1/-1}
+.audit div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.audit b{font-family:var(--f-head);font-weight:600}
+.audit span{color:var(--muted);font-size:15px}
+
+section.concept{display:flex;flex-direction:column;gap:20px}
+.c-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px}
+.c-num{font-family:var(--f-head);font-size:14px;color:var(--muted)}
+.c-desc{max-width:70ch}
+
+.boards{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+.board{border-radius:14px;min-height:230px;display:flex;align-items:center;justify-content:center;padding:28px 20px;min-width:0}
+.board.wide{grid-row:span 2;min-height:300px}
+.board.light{border:1px solid var(--line)}
+.sizes{display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap;justify-content:center}
+.sizes figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px}
+.sizes figcaption{font-size:12px;opacity:.75;font-variant-numeric:tabular-nums}
+
+.lockup{display:flex;align-items:center;gap:16px;min-width:0}
+.lockup svg.mark{flex:none}
+.lockup .txt{display:flex;flex-direction:column;min-width:0}
+.lockup .ar{line-height:1.15}
+.lockup .en{line-height:1.2;direction:ltr;text-align:right}
+.lockup .tag{font-size:12.5px;margin-top:6px;opacity:.85}
+
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.spec{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.swatches{display:flex;gap:10px;flex-wrap:wrap}
+.sw{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.sw i{display:block;width:56px;height:40px;border-radius:8px;border:1px solid var(--line)}
+.fonts{display:flex;flex-direction:column;gap:6px;font-size:15px}
+.fonts span{color:var(--muted);font-size:13px}
+ul.why{margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:4px;font-size:15px}
+
+/* concept 1 — السقف المزدوج */
+.k1{--m1:#14294A;--m2:#C99A2E}
+.k1.rev{--m1:#FFFFFF;--m2:#E2B84F}
+.k1 .ar{font-family:"Readex Pro",sans-serif;font-weight:700;font-size:34px;color:var(--m1)}
+.k1 .en{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:.28em;color:var(--m2)}
+.k1 .tag{color:var(--m1);font-family:"Readex Pro",sans-serif}
+/* concept 2 — الشروق */
+.k2{--s:#F29E38;--h:#0E5E6F;--g:#6DB33F;--w:#FFFFFF;--t:#0E5E6F}
+.k2.rev{--h:#FFFFFF;--w:#0E5E6F;--t:#FFFFFF;--g:#8FD15F}
+.k2 .ar{font-family:"Baloo Bhaijaan 2",sans-serif;font-weight:800;font-size:38px;color:var(--t)}
+.k2 .en{font-family:"Baloo Bhaijaan 2",sans-serif;font-weight:600;font-size:17px;color:var(--s);letter-spacing:.06em}
+.k2 .tag{color:var(--t);font-family:"Baloo Bhaijaan 2",sans-serif}
+/* concept 3 — الدرجات */
+.k3{--b1:#0B7A5A;--b2:#FFFFFF;--b3:#9ED9B8;--t:#1D2A2A;--t2:#0B7A5A}
+.k3.rev{--b1:#FFFFFF;--b2:#0B7A5A;--b3:#0B7A5A;--t:#FFFFFF;--t2:#9ED9B8}
+.k3 .ar{font-family:"IBM Plex Sans Arabic",sans-serif;font-weight:700;font-size:34px;color:var(--t)}
+.k3 .en{font-family:"IBM Plex Sans Arabic",sans-serif;font-weight:500;font-size:15px;letter-spacing:.2em;color:var(--t2)}
+.k3 .tag{color:var(--t);font-family:"IBM Plex Sans Arabic",sans-serif}
+
+.tablebox{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:15px}
+th,td{padding:12px 16px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-head);font-weight:600;background:var(--chip)}
+tr:last-child td{border-bottom:none}
+
+.next{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.next div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:4px}
+.next span{color:var(--muted);font-size:14px}
+
+@media (max-width:720px){
+  .boards{grid-template-columns:1fr}
+  .board.wide{grid-row:auto}
+  .lockup{flex-direction:column;text-align:center}
+  .lockup .en{text-align:center}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- 1: حرف M مبني من سقفين + شباك الشعار القديم -->
+    <symbol id="m1" viewBox="0 0 120 120">
+      <path d="M18 102 V50 L42 26 L60 44 L78 26 L102 50 V102" fill="none" stroke="var(--m1)" stroke-width="12" stroke-linejoin="miter" stroke-miterlimit="4"/>
+      <rect x="50" y="62" width="9" height="9" fill="var(--m2)"/>
+      <rect x="61" y="62" width="9" height="9" fill="var(--m2)"/>
+      <rect x="50" y="73" width="9" height="9" fill="var(--m2)"/>
+      <rect x="61" y="73" width="9" height="9" fill="var(--m2)"/>
+    </symbol>
+    <!-- 2: الشمس والبيت والأفق — تطوير مباشر للقديم -->
+    <symbol id="m2" viewBox="0 0 120 120">
+      <g stroke="var(--s)" stroke-width="5" stroke-linecap="round">
+        <line x1="26.2" y1="65.7" x2="16.8" y2="62.3"/>
+        <line x1="36.9" y1="50.4" x2="30.4" y2="42.8"/>
+        <line x1="83.1" y1="50.4" x2="89.6" y2="42.8"/>
+        <line x1="93.8" y1="65.7" x2="103.2" y2="62.3"/>
+      </g>
+      <path d="M30 80 A30 30 0 0 1 90 80 Z" fill="var(--s)"/>
+      <path d="M42 80 V58 L60 41 L78 58 V80 Z" fill="var(--h)"/>
+      <rect x="54.8" y="60" width="4.6" height="4.6" fill="var(--w)"/>
+      <rect x="60.6" y="60" width="4.6" height="4.6" fill="var(--w)"/>
+      <rect x="54.8" y="65.8" width="4.6" height="4.6" fill="var(--w)"/>
+      <rect x="60.6" y="65.8" width="4.6" height="4.6" fill="var(--w)"/>
+      <path d="M8 90 Q60 66 112 88 Q60 80 8 90 Z" fill="var(--g)"/>
+    </symbol>
+    <!-- 3: درجات صاعدة = أقساط + مباني + سهم نمو -->
+    <symbol id="m3" viewBox="0 0 120 120">
+      <rect x="6" y="6" width="108" height="108" rx="26" fill="var(--b1)"/>
+      <rect x="28" y="70" width="16" height="28" rx="2" fill="var(--b2)"/>
+      <rect x="52" y="56" width="16" height="42" rx="2" fill="var(--b2)"/>
+      <rect x="76" y="40" width="16" height="58" rx="2" fill="var(--b2)"/>
+      <line x1="22" y1="62" x2="82.5" y2="29.2" stroke="var(--b3)" stroke-width="7" stroke-linecap="round"/>
+      <polygon points="96,22 85.5,36.7 77.9,22.7" fill="var(--b3)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">Mr. Boma · تطوير الهوية البصرية · المرحلة الأولى</span>
+  <h1>تلات مقترحات لشعار «مستر بوما»</h1>
+  <p class="lead">شركة تجارية متعددة الأنشطة: عقارات، استثمار، تمويل وتقسيط. كل مقترح تحت ده بياخد اتجاه مختلف في الشخصية، ومتعرض على خلفية فاتحة وغامقة وفي المقاسات الصغيرة (أيقونة تطبيق، صورة بروفايل، فافيكون). بعد ما تختاروا اتجاه نبني عليه الهوية الكاملة.</p>
+</header>
+
+<div class="audit">
+  <h3>ملاحظات على الشعار الحالي</h3>
+  <div><b>ألوان كتير ومتداخلة</b><span>الخطوط الملونة جوه الحروف (بينك وبنفسجي) بتخلي الاسم صعب القراية وصعب الطباعة.</span></div>
+  <div><b>غلطة إملائية</b><span>«installmnts» ناقصها حرف، الصح Installments.</span></div>
+  <div><b>مافيش اسم عربي</b><span>الجمهور عربي، والاسم لازم يبقى مقروء بالعربي في اللافتات والسوشيال.</span></div>
+  <div><b>ما بيصغرش كويس</b><span>تفاصيل الشمس والسقف المخطط بتختفي في صورة البروفايل والختم.</span></div>
+</div>
+
+<!-- ============ 1 ============ -->
+<section class="concept">
+  <div class="c-head">
+    <h2>المقترح الأول: السقف المزدوج</h2>
+    <span class="c-num">اتجاه مؤسسي فاخر</span>
+  </div>
+  <p class="c-desc">حرف M متكوّن من سقفين لبيتين جنب بعض، وفي النص الشباك المربع اللي كان في الشعار القديم بس بالدهبي. الرسالة: شركة كبيرة وموثوقة، العقار أساسها، والاسم بيتحفظ كحرف واحد.</p>
+  <div class="boards">
+    <div class="board wide light" style="background:#FFFFFF">
+      <div class="lockup k1">
+        <svg class="mark" width="104" height="104"><use href="#m1"/></svg>
+        <div class="txt"><span class="ar">مستر بوما</span><span class="en">MR. BOMA</span><span class="tag">للاستثمار والتمويل والتقسيط</span></div>
+      </div>
+    </div>
+    <div class="board" style="background:#14294A">
+      <div class="lockup k1 rev">
+        <svg class="mark" width="64" height="64"><use href="#m1"/></svg>
+        <div class="txt"><span class="ar" style="font-size:26px">مستر بوما</span><span class="en" style="font-size:12px">MR. BOMA</span></div>
+      </div>
+    </div>
+    <div class="board" style="background:#F1EBDD;color:#14294A">
+      <div class="sizes k1">
+        <figure><svg width="64" height="64" style="background:#14294A;border-radius:14px;padding:8px" class="k1 rev"><use href="#m1"/></svg><figcaption>64px</figcaption></figure>
+        <figure><svg width="32" height="32"><use href="#m1"/></svg><figcaption>32px</figcaption></figure>
+        <figure><svg width="16" height="16"><use href="#m1"/></svg><figcaption>16px</figcaption></figure>
+      </div>
+    </div>
+  </div>
+  <div class="specs">
+    <div class="spec"><h3>الألوان</h3>
+      <div class="swatches">
+        <div class="sw"><i style="background:#14294A"></i>#14294A كحلي</div>
+        <div class="sw"><i style="background:#C99A2E"></i>#C99A2E دهبي</div>
+        <div class="sw"><i style="background:#F1EBDD"></i>#F1EBDD رملي</div>
+      </div></div>
+    <div class="spec"><h3>الخطوط</h3>
+      <div class="fonts"><div style="font-family:'Readex Pro';font-weight:700">ريدكس برو <span>(Readex Pro) للعربي</span></div><div style="font-family:Sora;font-weight:700;direction:ltr;text-align:right">Sora <span>للإنجليزي</span></div></div></div>
+    <div class="spec"><h3>مناسب لو</h3>
+      <ul class="why"><li>عايزين تبانوا شركة استثمار كبيرة</li><li>هتتعاملوا مع مستثمرين وبنوك</li><li>عايزين قطيعة كاملة مع الشكل القديم</li></ul></div>
+  </div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section class="concept">
+  <div class="c-head">
+    <h2>المقترح التاني: الشروق</h2>
+    <span class="c-num">تطوير للشعار القديم</span>
+  </div>
+  <p class="c-desc">نفس عناصر الشعار القديم (الشمس والبيت والأفق الأخضر) بس متبسّطة ومترتبة، بألوان أقل وأوضح. الرسالة: بداية جديدة وبيت مضمون لكل عميل. ده أأمن اختيار لو العملا متعودين على الشكل الحالي.</p>
+  <div class="boards">
+    <div class="board wide light" style="background:#FFF8EE">
+      <div class="lockup k2">
+        <svg class="mark" width="112" height="112"><use href="#m2"/></svg>
+        <div class="txt"><span class="ar">مستر بوما</span><span class="en">Mr. Boma · Fair Trade</span><span class="tag">للاستثمار والتمويل والتقسيط</span></div>
+      </div>
+    </div>
+    <div class="board" style="background:#0E5E6F">
+      <div class="lockup k2 rev">
+        <svg class="mark" width="68" height="68"><use href="#m2"/></svg>
+        <div class="txt"><span class="ar" style="font-size:28px">مستر بوما</span><span class="en" style="font-size:13px">Mr. Boma</span></div>
+      </div>
+    </div>
+    <div class="board" style="background:#FDEBD3;color:#0E5E6F">
+      <div class="sizes k2">
+        <figure><svg width="64" height="64" style="background:#FFFFFF;border-radius:14px;padding:6px"><use href="#m2"/></svg><figcaption>64px</figcaption></figure>
+        <figure><svg width="32" height="32"><use href="#m2"/></svg><figcaption>32px</figcaption></figure>
+        <figure><svg width="16" height="16"><use href="#m2"/></svg><figcaption>16px</figcaption></figure>
+      </div>
+    </div>
+  </div>
+  <div class="specs">
+    <div class="spec"><h3>الألوان</h3>
+      <div class="swatches">
+        <div class="sw"><i style="background:#0E5E6F"></i>#0E5E6F بترولي</div>
+        <div class="sw"><i style="background:#F29E38"></i>#F29E38 برتقالي</div>
+        <div class="sw"><i style="background:#6DB33F"></i>#6DB33F أخضر</div>
+        <div class="sw"><i style="background:#FFF8EE"></i>#FFF8EE كريمي</div>
+      </div></div>
+    <div class="spec"><h3>الخطوط</h3>
+      <div class="fonts"><div style="font-family:'Baloo Bhaijaan 2';font-weight:800">بالو بهيجان <span>(Baloo Bhaijaan 2) عربي وإنجليزي</span></div></div></div>
+    <div class="spec"><h3>مناسب لو</h3>
+      <ul class="why"><li>عملاكم عارفين الشعار القديم</li><li>جمهوركم أسر وأفراد بيقسّطوا</li><li>عايزين شكل ودود وقريب من الناس</li></ul></div>
+  </div>
+</section>
+
+<!-- ============ 3 ============ -->
+<section class="concept">
+  <div class="c-head">
+    <h2>المقترح التالت: الدرجات</h2>
+    <span class="c-num">اتجاه تجاري حديث</span>
+  </div>
+  <p class="c-desc">تلات أعمدة طالعة جوه مربع: هي في نفس الوقت مباني (عقارات)، ودرجات (أقساط بتتسدد خطوة خطوة)، ورسم بياني (استثمار بيكبر)، وفوقهم سهم نمو. الرسالة: شركة متعددة الأنشطة كلها ماشية لقدام. شكل أيقونة جاهز للتطبيقات والسوشيال.</p>
+  <div class="boards">
+    <div class="board wide light" style="background:#FFFFFF">
+      <div class="lockup k3">
+        <svg class="mark" width="96" height="96"><use href="#m3"/></svg>
+        <div class="txt"><span class="ar">مستر بوما</span><span class="en">MR. BOMA</span><span class="tag">للاستثمار والتمويل والتقسيط</span></div>
+      </div>
+    </div>
+    <div class="board" style="background:#1D2A2A">
+      <div class="lockup k3 rev">
+        <svg class="mark" width="60" height="60"><use href="#m3"/></svg>
+        <div class="txt"><span class="ar" style="font-size:26px">مستر بوما</span><span class="en" style="font-size:12px">MR. BOMA</span></div>
+      </div>
+    </div>
+    <div class="board" style="background:#E3F4EA;color:#1D2A2A">
+      <div class="sizes k3">
+        <figure><svg width="64" height="64"><use href="#m3"/></svg><figcaption>64px</figcaption></figure>
+        <figure><svg width="32" height="32"><use href="#m3"/></svg><figcaption>32px</figcaption></figure>
+        <figure><svg width="16" height="16"><use href="#m3"/></svg><figcaption>16px</figcaption></figure>
+      </div>
+    </div>
+  </div>
+  <div class="specs">
+    <div class="spec"><h3>الألوان</h3>
+      <div class="swatches">
+        <div class="sw"><i style="background:#0B7A5A"></i>#0B7A5A زمردي</div>
+        <div class="sw"><i style="background:#9ED9B8"></i>#9ED9B8 نعناعي</div>
+        <div class="sw"><i style="background:#1D2A2A"></i>#1D2A2A فحمي</div>
+      </div></div>
+    <div class="spec"><h3>الخطوط</h3>
+      <div class="fonts"><div style="font-family:'IBM Plex Sans Arabic';font-weight:700">آي بي إم بلكس عربي <span>(IBM Plex Sans Arabic) عربي وإنجليزي</span></div></div></div>
+    <div class="spec"><h3>مناسب لو</h3>
+      <ul class="why"><li>هتتوسعوا في أنشطة غير العقارات</li><li>عندكم أو ناويين تعملوا تطبيق أو منصة</li><li>عايزين شكل عصري يبان مالي وتقني</li></ul></div>
+  </div>
+</section>
+
+<section class="concept">
+  <h2>مقارنة سريعة</h2>
+  <div class="tablebox"><table>
+    <thead><tr><th>المعيار</th><th>١ السقف المزدوج</th><th>٢ الشروق</th><th>٣ الدرجات</th></tr></thead>
+    <tbody>
+      <tr><td>الشخصية</td><td>فخامة وثقة</td><td>دفء وقرب من الناس</td><td>حداثة ونمو</td></tr>
+      <tr><td>الصلة بالشعار القديم</td><td>الشباك بس</td><td>قوية جدًا</td><td>ضعيفة</td></tr>
+      <tr><td>بيعبر عن تعدد الأنشطة</td><td>متوسط (عقار أكتر)</td><td>متوسط (عقار أكتر)</td><td>عالي</td></tr>
+      <tr><td>وضوحه في المقاس الصغير</td><td>ممتاز</td><td>جيد</td><td>ممتاز</td></tr>
+      <tr><td>سهولة الطباعة والتطريز</td><td>ممتازة (لونين)</td><td>متوسطة (٣ ألوان)</td><td>ممتازة (لونين)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="lead">ترشيحي: <b>المقترح الأول</b> لو الشركة عايزة تكبر وتتعامل مع مستثمرين، و<b>التاني</b> لو أولويتهم إن العملا الحاليين يفضلوا عارفينهم.</p>
+</section>
+
+<section class="concept">
+  <h2>الخطوة الجاية: الهوية الكاملة</h2>
+  <p class="lead">بعد اختيار المقترح، هنبني عليه:</p>
+  <div class="next">
+    <div><b>دليل الهوية</b><span>نسخ الشعار، المساحة الآمنة، أقل مقاس، الاستخدامات الغلط</span></div>
+    <div><b>الألوان والخطوط</b><span>لوحة كاملة بأكواد الطباعة والشاشة، وتدرج أحجام الخطوط</span></div>
+    <div><b>الأدوات المكتبية</b><span>كارت بيزنس، ورق رسمي، ظرف، عقد تقسيط، فاتورة</span></div>
+    <div><b>السوشيال ميديا</b><span>صورة بروفايل، غلاف، قوالب بوستات وستوري</span></div>
+    <div><b>اللافتات والفرع</b><span>واجهة المحل، رول أب، يونيفورم، ختم</span></div>
+    <div><b>العناصر المساعدة</b><span>نقشة (Pattern) من الشعار، أيقونات الأنشطة</span></div>
+  </div>
+</section>
+
+</div>
