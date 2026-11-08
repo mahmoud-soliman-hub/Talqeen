@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Fahd Birth Card</title>
+<style>
+@font-face{font-family:Amiri;src:url(fonts/Amiri-400.ttf);font-weight:400}
+@font-face{font-family:Amiri;src:url(fonts/Amiri-700.ttf);font-weight:700}
+@font-face{font-family:AmiriQ;src:url(fonts/AmiriQuran-400.ttf)}
+@font-face{font-family:Aref;src:url(fonts/ArefRuqaa-700.ttf);font-weight:700}
+@font-face{font-family:Thm;src:url(fonts/thmanyahseriftext-Bold.otf);font-weight:700}
+@font-face{font-family:Thm;src:url(fonts/thmanyahseriftext-Light.otf);font-weight:300}
+
+:root{
+  --ink:#5f4e3d;
+  --ink-soft:#7a6855;
+  --blue:#4c6c8c;
+  --blue-deep:#36536f;
+  --gold-1:#6f4d1c; --gold-2:#a77b37; --gold-3:#e6cd8e; --gold-4:#b58a45; --gold-5:#7c5826;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#efe6d8}
+.card{position:relative;width:1080px;height:1920px;overflow:hidden}
+.bg{position:absolute;left:0;top:-8px;width:1080px;height:auto;display:block}
+
+/* soft lift behind the text block for legibility */
+.glow{position:absolute;left:50%;top:250px;width:760px;height:1180px;transform:translateX(-50%);
+  background:radial-gradient(ellipse at 50% 45%,rgba(255,251,243,.55) 0%,rgba(255,251,243,.28) 45%,rgba(255,251,243,0) 72%);}
+/* gentle vignette + warm grade */
+.vignette{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 85% 70% at 50% 42%,rgba(0,0,0,0) 60%,rgba(96,70,40,.16) 100%);}
+.grain{position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:multiply}
+
+.col{position:absolute;left:50%;transform:translateX(-50%);width:640px;text-align:center}
+
+.foil{background:linear-gradient(172deg,var(--gold-1) 0%,var(--gold-2) 20%,var(--gold-3) 38%,var(--gold-4) 54%,var(--gold-5) 70%,#c9a25c 86%,#8a6430 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 1.5px 0 rgba(255,255,255,.75)) drop-shadow(0 3px 5px rgba(110,78,30,.22));}
+.navy{background:linear-gradient(175deg,#6f8fb0 0%,#4c6c8c 35%,#36536f 70%,#4a6a8a 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 2px 0 rgba(255,255,255,.7)) drop-shadow(0 6px 10px rgba(54,83,111,.20));}
+
+.orn{display:block;margin:0 auto}
+.t-hamd{font-family:Aref;font-weight:700;font-size:128px;line-height:1.3;}
+.t-sub{font-family:Amiri;font-size:40px;line-height:1.5;color:var(--ink)}
+.t-intro{font-family:Thm;font-weight:300;font-size:36px;line-height:1.5;color:var(--blue-deep)}
+.t-name{font-family:Aref;font-weight:700;font-size:340px;line-height:1;}
+.t-father{font-family:Thm;font-weight:700;font-size:50px;line-height:1.3;color:var(--blue-deep);display:inline-flex;align-items:center;gap:22px}
+.t-father .rule{width:70px;height:1.5px;background:linear-gradient(90deg,rgba(167,123,55,0),#a77b37)}
+.t-father .rule.l{background:linear-gradient(270deg,rgba(167,123,55,0),#a77b37)}
+.t-father .dot{width:7px;height:7px;transform:rotate(45deg);background:#a77b37}
+.t-dua{font-family:Amiri;font-size:37px;line-height:1.8;color:var(--ink)}
+.t-sign{font-family:Thm;font-weight:300;font-size:32px;color:var(--ink-soft)}
+
+.v2{display:none}
+body.alt .v1{display:none}
+body.alt .v2{display:block}
+</style>
+</head>
+<body>
+<div class="card">
+  <img class="bg" src="bg/main.jpg" alt="">
+  <div class="glow"></div>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#7a5524"/><stop offset=".35" stop-color="#d9bb78"/>
+        <stop offset=".6" stop-color="#a77b37"/><stop offset="1" stop-color="#7c5826"/>
+      </linearGradient>
+      <linearGradient id="fadeR" x1="0" x2="1"><stop offset="0" stop-color="#a77b37" stop-opacity="0"/><stop offset="1" stop-color="#a77b37"/></linearGradient>
+      <linearGradient id="fadeL" x1="1" x2="0"><stop offset="0" stop-color="#a77b37" stop-opacity="0"/><stop offset="1" stop-color="#a77b37"/></linearGradient>
+      <!-- eight-pointed star (khatam) -->
+      <symbol id="star" viewBox="-50 -50 100 100">
+        <g fill="none" stroke="url(#g)" stroke-width="3.2" stroke-linejoin="miter">
+          <rect x="-30" y="-30" width="60" height="60"/>
+          <rect x="-30" y="-30" width="60" height="60" transform="rotate(45)"/>
+        </g>
+        <circle r="13" fill="none" stroke="url(#g)" stroke-width="2.4"/>
+        <circle r="5" fill="url(#g)"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- ===== top ornament ===== -->
+  <svg class="col orn" style="top:292px;width:330px" height="56" viewBox="0 0 330 56">
+    <line x1="10" y1="28" x2="128" y2="28" stroke="url(#fadeR)" stroke-width="1.6"/>
+    <line x1="202" y1="28" x2="320" y2="28" stroke="url(#fadeL)" stroke-width="1.6"/>
+    <circle cx="136" cy="28" r="2.6" fill="#a77b37"/><circle cx="194" cy="28" r="2.6" fill="#a77b37"/>
+    <use href="#star" x="139" y="2" width="52" height="52"/>
+  </svg>
+
+  <!-- ===== VARIANT 1 : announcement (original content) ===== -->
+  <div class="v1">
+    <div class="col" style="top:318px"><div class="t-hamd foil">الحمد لله</div></div>
+    <div class="col" style="top:508px"><div class="t-sub">الذي بنعمته تتم الصالحات</div></div>
+    <svg class="col orn" style="top:590px;width:190px" height="16" viewBox="0 0 190 16">
+      <line x1="0" y1="8" x2="80" y2="8" stroke="url(#fadeR)" stroke-width="1.4"/>
+      <line x1="110" y1="8" x2="190" y2="8" stroke="url(#fadeL)" stroke-width="1.4"/>
+      <rect x="89" y="2" width="12" height="12" transform="rotate(45 95 8)" fill="url(#g)"/>
+    </svg>
+    <div class="col" style="top:622px"><div class="t-intro">رزقنا الله بمولودنا</div></div>
+    <div class="col" style="top:652px"><div class="t-name navy">فهد</div></div>
+    <div class="col" style="top:1012px"><div class="t-father"><span class="rule l"></span><span class="dot"></span>بن عبدالعزيز<span class="dot"></span><span class="rule"></span></div></div>
+
+    <svg class="col orn" style="top:1112px;width:300px" height="40" viewBox="0 0 300 40">
+      <line x1="10" y1="20" x2="122" y2="20" stroke="url(#fadeR)" stroke-width="1.4"/>
+      <line x1="178" y1="20" x2="290" y2="20" stroke="url(#fadeL)" stroke-width="1.4"/>
+      <use href="#star" x="132" y="2" width="36" height="36"/>
+    </svg>
+    <div class="col" style="top:1166px"><div class="t-dua">
+      اللهم أنبته نباتاً حسناً<br>
+      واجعله قرّة عينٍ لنا، واجعله من الصالحين<br>
+      واحفظه بعينك التي لا تنام
+    </div></div>
+  </div>
+
+  <!-- ===== VARIANT 2 : congratulation to the father ===== -->
+  <div class="v2">
+    <div class="col" style="top:322px"><div class="t-hamd foil">مبارك</div></div>
+    <div class="col" style="top:508px"><div class="t-sub">نهنّئ أخانا الغالي</div></div>
+    <svg class="col orn" style="top:590px;width:190px" height="16" viewBox="0 0 190 16">
+      <line x1="0" y1="8" x2="80" y2="8" stroke="url(#fadeR)" stroke-width="1.4"/>
+      <line x1="110" y1="8" x2="190" y2="8" stroke="url(#fadeL)" stroke-width="1.4"/>
+      <rect x="89" y="2" width="12" height="12" transform="rotate(45 95 8)" fill="url(#g)"/>
+    </svg>
+    <div class="col" style="top:622px"><div class="t-intro">بقدوم مولوده السعيد</div></div>
+    <div class="col" style="top:652px"><div class="t-name navy">فهد</div></div>
+    <div class="col" style="top:1012px"><div class="t-father"><span class="rule l"></span><span class="dot"></span>بن عبدالعزيز<span class="dot"></span><span class="rule"></span></div></div>
+
+    <svg class="col orn" style="top:1112px;width:300px" height="40" viewBox="0 0 300 40">
+      <line x1="10" y1="20" x2="122" y2="20" stroke="url(#fadeR)" stroke-width="1.4"/>
+      <line x1="178" y1="20" x2="290" y2="20" stroke="url(#fadeL)" stroke-width="1.4"/>
+      <use href="#star" x="132" y="2" width="36" height="36"/>
+    </svg>
+    <div class="col" style="top:1166px"><div class="t-dua">
+      بُورك لك في الموهوب، وشكرتَ الواهب<br>
+      وبلغ أشُدَّه، ورُزقتَ بِرَّه
+    </div></div>
+    <div class="col" style="top:1334px"><div class="t-sign">مع أطيب التهاني والتبريكات</div></div>
+  </div>
+
+  <div class="vignette"></div>
+  <svg class="grain" width="1080" height="1920"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .4  0 0 0 0 .3  0 0 0 0 .2  0 0 0 1 0"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+</div>
+<script>if(location.hash==='#alt')document.body.classList.add('alt')</script>
+</body>
+</html>
