@@ -1,0 +1,169 @@
+{
+ "name": "Gotion — شراكة شهرية للوكالات",
+ "fps": 60,
+ "width": 1080,
+ "height": 1920,
+ "bpm": 120,
+ "beatsPerBar": 4,
+ "beatOffset": 0,
+ "palette": {
+  "bg": "#F6F5FB",
+  "ink": "#1B1C54",
+  "acc": "#7459F6",
+  "clay": "#4F3BD1",
+  "hi": "#B8AAFF",
+  "mut": "#8583A6",
+  "night": "#131341",
+  "white": "#FFFFFF"
+ },
+ "fonts": {
+  "display": "Readex Pro",
+  "body": "Readex Pro",
+  "num": "Inter"
+ },
+ "post": {
+  "grain": 0.03,
+  "vignette": 0
+ },
+ "timing": {
+  "snap": "quarter",
+  "snapTarget": "line",
+  "snapLines": "all",
+  "leadIn": 0.3,
+  "gap": 0.3,
+  "startPad": 0.35,
+  "tail": 1.2
+ },
+ "music": {
+  "key": "D",
+  "scale": "minor",
+  "progression": [
+   0,
+   5,
+   3,
+   4
+  ],
+  "level": -9,
+  "duck": -4,
+  "top": {
+   "hat": 15,
+   "pluck": 4
+  }
+ },
+ "sections": [
+  {
+   "name": "intro",
+   "at": 0
+  },
+  {
+   "name": "build",
+   "at": "scene:s2"
+  },
+  {
+   "name": "drop",
+   "at": "scene:s3"
+  },
+  {
+   "name": "break",
+   "at": "scene:s5"
+  },
+  {
+   "name": "drop",
+   "at": "scene:s6"
+  },
+  {
+   "name": "outro",
+   "at": "scene:s7"
+  }
+ ],
+ "scenes": [
+  {
+   "id": "s1",
+   "file": "scenes/s1_hook.js",
+   "lines": [
+    "l1"
+   ]
+  },
+  {
+   "id": "s2",
+   "file": "scenes/s2_problem.js",
+   "lines": [
+    "l2"
+   ],
+   "transition": {
+    "type": "push",
+    "dur": 0.45,
+    "dir": "up",
+    "ease": "expoInOut"
+   }
+  },
+  {
+   "id": "s3",
+   "file": "scenes/s3_gotion.js",
+   "lines": [
+    "l3"
+   ],
+   "transition": {
+    "type": "wipe",
+    "dur": 0.5,
+    "dir": "up",
+    "ease": "expoInOut"
+   }
+  },
+  {
+   "id": "s4",
+   "file": "scenes/s4_services.js",
+   "lines": [
+    "l4"
+   ],
+   "transition": {
+    "type": "push",
+    "dur": 0.45,
+    "dir": "rtl",
+    "ease": "expoInOut"
+   }
+  },
+  {
+   "id": "s5",
+   "file": "scenes/s5_offer.js",
+   "lines": [
+    "l5"
+   ],
+   "transition": {
+    "type": "iris",
+    "dur": 0.5,
+    "at": [
+     540,
+     700
+    ],
+    "ease": "expoInOut"
+   }
+  },
+  {
+   "id": "s6",
+   "file": "scenes/s6_deal.js",
+   "lines": [
+    "l6"
+   ],
+   "transition": {
+    "type": "push",
+    "dur": 0.45,
+    "dir": "up",
+    "ease": "expoInOut"
+   }
+  },
+  {
+   "id": "s7",
+   "file": "scenes/s7_close.js",
+   "lines": [
+    "l7"
+   ],
+   "transition": {
+    "type": "wipe",
+    "dur": 0.5,
+    "dir": "up",
+    "ease": "expoInOut"
+   }
+  }
+ ]
+}
