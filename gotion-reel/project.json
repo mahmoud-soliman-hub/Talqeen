@@ -1,0 +1,21 @@
+{
+  "name": "Gotion — أثركم يستحق أن يُرى",
+  "fps": 60, "width": 1080, "height": 1920,
+  "bpm": 96, "beatsPerBar": 4, "beatOffset": 0,
+  "palette": { "bg": "#F6F5FC", "ink": "#16154E", "acc": "#7458FB", "clay": "#4B3BC4", "hi": "#C9BEFF", "mut": "#8E8CAB" },
+  "fonts": { "display": "Readex Pro", "body": "Readex Pro", "num": "Inter" },
+  "post": { "grain": 0.025, "vignette": 0 },
+  "music": { "key": "D", "scale": "minor", "progression": [0, 5, 3, 4], "level": -9, "duck": -5, "top": { "hat": 12, "pluck": 3 } },
+  "sections": [
+    { "name": "intro", "at": 0 }, { "name": "build", "at": "scene:s2" }, { "name": "drop", "at": "scene:s3" },
+    { "name": "break", "at": "scene:s5" }, { "name": "outro", "at": "scene:s6" }
+  ],
+  "scenes": [
+    { "id": "s1", "file": "scenes/s1_hook.js", "lines": ["l1"] },
+    { "id": "s2", "file": "scenes/s2_forgotten.js", "lines": ["l2"], "transition": { "type": "wipe", "dur": 0.5, "dir": "up" } },
+    { "id": "s3", "file": "scenes/s3_play.js", "lines": ["l3"], "transition": { "type": "iris", "dur": 0.6, "at": [540, 860] } },
+    { "id": "s4", "file": "scenes/s4_phone.js", "lines": ["l4"], "transition": { "type": "push", "dur": 0.55, "dir": "up", "ease": "expoInOut" } },
+    { "id": "s5", "file": "scenes/s5_studio.js", "lines": ["l5"], "transition": { "type": "wipe", "dur": 0.55, "dir": "rtl", "color": "#7458FB" } },
+    { "id": "s6", "file": "scenes/s6_logo.js", "lines": ["l6"], "transition": { "type": "iris", "dur": 0.7, "at": [540, 760] } }
+  ]
+}
