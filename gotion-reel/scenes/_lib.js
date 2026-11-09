@@ -91,6 +91,15 @@ GO.say = (ctx, t, str, x, y, o = {}) => {
   X.restore(); return boxes;
 };
 
+/* زخرفة أسفل الشاشة: مثلث الشعار كإطار خفيف بيلف ببطء (بلا نص — المنطقة دي مش آمنة للكتابة) */
+GO.deco = (ctx, t, color, o = {}) => {
+  const X = ctx.X, k = o.k ?? 1; if (k <= 0) return;
+  X.save(); X.globalAlpha = (o.alpha ?? 1) * k;
+  GO.tri(X, o.x ?? 200, (o.y ?? 1730) + (1 - k) * 80, o.size ?? 430, { outline: 10, color, rot: -0.35 + 0.12 * Math.sin(t * 0.7), dir: o.dir ?? 1 });
+  GO.tri(X, (o.x ?? 200) + (o.dir ?? 1) * 330, (o.y ?? 1730) + 90 + (1 - k) * 120, (o.size ?? 430) * 0.36, { color, rot: 0.3 + 0.2 * Math.sin(t * 0.9 + 1), dir: o.dir ?? 1 });
+  X.restore();
+};
+
 /* علامة صح مرسومة */
 GO.check = (ctx, cx, cy, r, k, color) => ctx.drawPath(ctx.X, [[cx - r * 0.5, cy + r * 0.02], [cx - r * 0.12, cy + r * 0.38], [cx + r * 0.55, cy - r * 0.36]], k, { width: r * 0.24, color: color || '#fff', smooth: false });
 

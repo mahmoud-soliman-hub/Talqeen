@@ -24,6 +24,8 @@ MOTION.scene({
   draw(t, lt, ctx) {
     const { X, at, E } = ctx, C = GO.C;
     GO.bg(ctx, t, C.night, '#23246A', { speed: 18 });
+    GO.deco(ctx, t, '#23246A', { k: at(lt, 0.1, 0.9, 'expoOut') });
+    X.save(); X.translate(0, 40);
     const wToday = ctx.wordTime('l1', 3), wTeam = ctx.wordTime('l1', 4), wLate = ctx.wordTime('l1', 6);
 
     // رسايل العميل
@@ -61,5 +63,6 @@ MOTION.scene({
       X.beginPath(); X.arc(0, 0, 24, t * 7, t * 7 + 4.2); X.stroke();
       X.restore();
     }
+    X.restore();
   },
 });

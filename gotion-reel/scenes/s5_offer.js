@@ -6,6 +6,8 @@ MOTION.scene({
   draw(t, lt, ctx) {
     const { X, at, E } = ctx, C = GO.C, w = i => ctx.wordTime('l5', i);
     GO.bg(ctx, t, C.night, '#23246A', { speed: 16 });
+    GO.deco(ctx, t, '#23246A', { k: at(lt, 0.2, 1.0, 'expoOut'), x: 880, dir: -1 });
+    X.save(); X.translate(0, 70);
     const tB = w(3).s - 0.25, kB = at(t, tB, tB + 0.55, 'expoInOut');
 
     // حلقة الشهور: 12 علامة بتنور ورا بعض ومكملة لف — «مستمرة»
@@ -49,5 +51,6 @@ MOTION.scene({
       const bx = GO.say(ctx, t, 'ما تلقاها بالقطعة', 540, 1370, { line: 'l5', from: 5, size: 74, color: '#C9C6EA' });
       if (bx) { const b = bx[2]; ctx.drawPath(X, [[b.x + b.w + 10, b.cy + 2], [b.x - 10, b.cy - 4]], at(t, w(7).s + 0.18, w(7).e + 0.1, 'cubicOut'), { width: 9, color: C.violet, smooth: false }); }
     }
+    X.restore();
   },
 });

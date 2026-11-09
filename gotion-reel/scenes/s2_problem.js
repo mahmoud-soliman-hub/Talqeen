@@ -7,6 +7,8 @@ MOTION.scene({
     const { X, at } = ctx, C = GO.C;
     GO.bg(ctx, t, C.paper, C.mist, { speed: -12 });
     const w = i => ctx.wordTime('l2', i);
+    GO.deco(ctx, t, '#E4E0F6', { k: at(lt, 0.2, 1.0, 'expoOut'), x: 880, dir: -1 });
+    X.save(); X.translate(0, 70);
 
     // العنوان + صف تقويم بيتقلب كل شهر
     GO.say(ctx, t, 'كل شهر نفس القصة', 540, 330, { line: 'l2', from: 0, size: 104, hi: { 2: C.violet, 3: C.violet } });
@@ -53,5 +55,6 @@ MOTION.scene({
       const tip = ctx.drawPath(X, pts, ctx.E.cubicInOut(kc), { width: 13, color: C.violet });
       if (tip) { X.fillStyle = C.navy; X.beginPath(); X.arc(tip[0], tip[1], 17, 0, 6.2832); X.fill(); X.fillStyle = '#fff'; X.beginPath(); X.arc(tip[0], tip[1], 7, 0, 6.2832); X.fill(); }
     }
+    X.restore();
   },
 });

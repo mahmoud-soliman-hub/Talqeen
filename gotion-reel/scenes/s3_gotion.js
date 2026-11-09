@@ -37,8 +37,10 @@ MOTION.scene({
     }
     // ── B: الشعار (فاتح) يكشف من دايرة ──
     if (kB > 0) {
-      X.save(); X.beginPath(); X.arc(540, 620, kB * 2100, 0, 6.2832); X.clip();
+      X.save(); X.beginPath(); X.arc(540, 710, kB * 2100, 0, 6.2832); X.clip();
       GO.bg(ctx, t, C.paper, C.mist, { speed: 12 });
+      GO.deco(ctx, t, '#E4E0F6', { k: at(t, tB + 0.3, tB + 1.1, 'expoOut') });
+      X.translate(0, 90);
       // مدارات الأشكال حوالين الشعار
       const ko = at(t, tB + 0.2, tB + 1.0, 'expoOut');
       X.save(); X.translate(540, 700); X.globalAlpha = 0.9 * ko;
@@ -56,7 +58,7 @@ MOTION.scene({
       X.restore();
       const kl = at(t, tB + 0.15, tB + 1.25, 'linear');
       GO.logo(ctx, { cx: 540, cy: 690, w: 760, k: kl, tri: at(t, tB + 0.75, tB + 1.2, 'linear'), tag: at(t, tB + 0.95, tB + 1.6, 'linear') });
-      GO.say(ctx, t, 'فريق الجرافيك والموشن', 540, 1140, { line: 'l3', from: 3, size: 76, hi: { 1: C.violet, 2: C.violet } });
+      GO.say(ctx, t, 'فريق الجرافيك والموشن', 540, 1140, { line: 'l3', from: 3, size: 70, hi: { 1: C.violet, 2: C.violet } });
       GO.say(ctx, t, 'اللي يشتغل وراك', 540, 1280, { line: 'l3', from: 6, size: 86 });
       ctx.drawPath(X, [[330, 1322], [480, 1336], [620, 1324], [750, 1332]], at(t, w(8).s, w(8).e + 0.15, 'cubicOut'), { width: 12, color: C.violet });
       X.restore();

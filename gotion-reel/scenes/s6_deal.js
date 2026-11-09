@@ -7,11 +7,11 @@ MOTION.scene({
     const { X, at } = ctx, C = GO.C, w = i => ctx.wordTime('l6', i);
     GO.bg(ctx, t, C.paper, C.mist, { speed: 12 });
     // فوق: أنت جيب العملاء
-    GO.say(ctx, t, 'أنت جيب العملاء', 540, 470, { line: 'l6', from: 0, size: 108, hi: { 2: C.violet } });
+    GO.say(ctx, t, 'أنت جيب العملاء', 540, 540, { line: 'l6', from: 0, size: 108, hi: { 2: C.violet } });
     const cols = [C.navy, C.violet, C.soft, C.navy, C.violet];
     for (let i = 0; i < 5; i++) {
       const s = w(1).s + i * 0.08, k = at(t, s, s + 0.4, 'expoOut'); if (k <= 0) continue;
-      const x = 540 + (2 - i) * 172, y = 680, side = i % 2 ? 1 : -1;
+      const x = 540 + (2 - i) * 172, y = 770, side = i % 2 ? 1 : -1;
       X.save(); X.globalAlpha = Math.min(1, k * 2); X.translate(x + side * (1 - k) * 320, y + 6 * Math.sin(t * 2.4 + i)); X.scale(1.25, 1.25);
       X.fillStyle = '#fff'; X.beginPath(); X.arc(0, 0, 62, 0, 6.2832); X.fill(); X.strokeStyle = C.mist; X.lineWidth = 3; X.stroke();
       X.fillStyle = cols[i]; X.beginPath(); X.arc(0, -14, 20, 0, 6.2832); X.fill(); X.beginPath(); X.arc(0, 50, 40, 3.1416, 0); X.fill();
@@ -20,11 +20,11 @@ MOTION.scene({
     // تحت: والتنفيذ علينا — لوحة بنفسجي بتطلع
     const tB = w(3).s - 0.3, kB = at(t, tB, tB + 0.5, 'expoInOut');
     if (kB > 0) {
-      const top = 1920 - kB * 1040;
+      const top = 1920 - kB * 920;
       X.save(); GO.rr(X, 0, top, 1080, 1200, 70); X.clip();
       GO.bg(ctx, t, C.violet, '#8B74FA', { speed: 26, r: 3 });
       X.restore();
-      X.save(); X.translate(0, top - 880);
+      X.save(); X.translate(0, top - 860);
       GO.say(ctx, t, 'والتنفيذ علينا', 540, 1180, { line: 'l6', from: 3, size: 124, color: '#fff', hi: { 1: C.night } });
       // 3 كروت تسليم وكل واحدة بتاخد صح
       for (let i = 0; i < 3; i++) {

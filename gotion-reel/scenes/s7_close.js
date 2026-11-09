@@ -10,9 +10,10 @@ MOTION.scene({
     const { X, at } = ctx, C = GO.C, w = i => ctx.wordTime('l7', i);
     GO.bg(ctx, t, C.paper, C.mist, { speed: 10 });
     const t0 = w(0).s - 0.3;
-    this.bits.draw(X, t - t0);
+    GO.deco(ctx, t, '#E4E0F6', { k: at(t, t0 + 0.3, t0 + 1.2, 'expoOut') });
+    X.save(); X.translate(0, 110);
     GO.logo(ctx, { cx: 540, cy: 690, w: 800, k: at(t, t0, t0 + 0.95, 'linear'), tri: at(t, t0 + 0.6, t0 + 1.0, 'linear'), tag: at(t, t0 + 0.8, t0 + 1.4, 'linear') });
-    GO.say(ctx, t, 'شريكك الإبداعي كل شهر', 540, 1110, { line: 'l7', from: 1, size: 74, hi: { 1: C.violet } });
+    GO.say(ctx, t, 'شريكك الإبداعي كل شهر', 540, 1110, { line: 'l7', from: 1, size: 68, hi: { 1: C.violet } });
     // زر التواصل
     const tc = w(5).s - 0.15, k = at(t, tc, tc + 0.4, 'expoOut');
     if (k > 0) {
@@ -26,5 +27,6 @@ MOTION.scene({
       GO.say(ctx, t, 'تواصل معنا الحين', 592, 1322, { line: 'l7', from: 5, size: 62, color: '#fff' });
       X.restore();
     }
+    X.restore();
   },
 });
